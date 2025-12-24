@@ -1,0 +1,78 @@
+name: GoanFlow
+version: "1.0.0"
+description: "AI-native tourism OS for Goa using 6-agent orchestration"
+framework: "amplify-gen-2"
+agents_count: 6
+context_file: "product.md"
+model: "llama-3.3-70b-versatile"  # Groq API
+api_provider: "groq"
+
+agents:
+  - name: "Tourist Profiler"
+    id: "agent-1"
+    purpose: "Understand tourist preferences through passive behavioral analysis"
+    steering: ".kiro/steering/agent-1.json"
+    status: "migrated_to_groq"
+    
+  - name: "Guide Matcher"
+    id: "agent-2"
+    purpose: "Find perfect guide using ML scoring algorithm"
+    steering: ".kiro/steering/agent-2.json"
+    status: "using_fallback"
+    
+  - name: "Crowd Manager"
+    id: "agent-3"
+    purpose: "Predict venue crowds and suggest less crowded alternatives"
+    steering: ".kiro/steering/agent-3.json"
+    status: "using_fallback"
+    
+  - name: "Price Intelligence"
+    id: "agent-4"
+    purpose: "Ensure fair pricing and detect tourist exploitation"
+    steering: ".kiro/steering/agent-4.json"
+    status: "using_fallback"
+    
+  - name: "Experience Curator"
+    id: "agent-5"
+    purpose: "Orchestrate all agents to build perfect day itineraries"
+    steering: ".kiro/steering/agent-5.json"
+    status: "using_fallback"
+    
+  - name: "Safety Guardian"
+    id: "agent-6"
+    purpose: "Real-time safety alerts and emergency coordination"
+    steering: ".kiro/steering/agent-6.json"
+    status: "using_fallback"
+
+tools:
+  - name: "Venue Database"
+    type: "database"
+    endpoint: "DynamoDB"
+    
+  - name: "Guide Database"
+    type: "database"
+    endpoint: "RDS PostgreSQL"
+    
+  - name: "ML Predictions"
+    type: "ml_model"
+    endpoint: "SageMaker"
+    
+  - name: "Safety Alerts"
+    type: "database"
+    endpoint: "DynamoDB"
+
+context:
+  file: "product.md"
+  size: "2800+ lines"
+  domains: 7
+  venues: "100+"
+  guides: "50+"
+  food_items: "200+"
+  
+deployment:
+  backend: "AWS Amplify Gen 2"
+  frontend: "React 18"
+  real_time: "DynamoDB Streams"
+  search: "ElasticSearch"
+  api: "Express + Groq SDK"
+
