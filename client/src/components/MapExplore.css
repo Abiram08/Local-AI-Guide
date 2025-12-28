@@ -7,51 +7,39 @@
     padding-bottom: var(--space-4);
 }
 
-/* --- FILTERS (Glass Effect) --- */
-.map-filters {
-    position: absolute;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
+/* --- SIDEBAR FILTERS (Above list) --- */
+.sidebar-filters {
     display: flex;
     gap: var(--space-2);
     padding: var(--space-3) var(--space-4);
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-radius: var(--radius-full);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
-.map-filters button {
-    padding: var(--space-2) var(--space-4);
+.sidebar-filters button {
+    padding: 6px 12px;
     border-radius: var(--radius-full);
     border: 1px solid transparent;
     background: transparent;
     color: #4a5568;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 0.8rem;
+    transition: all 0.2s ease;
+    font-size: 0.75rem;
     white-space: nowrap;
 }
 
-.map-filters button:hover {
+.sidebar-filters button:hover {
     background: rgba(67, 97, 238, 0.1);
     color: #4361EE;
     border-color: rgba(67, 97, 238, 0.3);
 }
 
-.map-filters button.active {
+.sidebar-filters button.active {
     background: #4361EE;
     color: white;
-    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
-    transform: scale(1.05);
-    border-color: transparent;
+    box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3);
 }
 
 /* --- MAP WRAPPER (Leaflet) --- */
@@ -464,27 +452,26 @@
    DARK MODE OVERRIDES
    ======================================== */
 
-:root:not([data-theme='light']) .map-filters,
-[data-theme='dark'] .map-filters {
-    background: rgba(20, 20, 20, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+:root:not([data-theme='light']) .sidebar-filters,
+[data-theme='dark'] .sidebar-filters {
+    background: var(--bg-tertiary);
+    border-color: var(--border-light);
 }
 
-:root:not([data-theme='light']) .map-filters button,
-[data-theme='dark'] .map-filters button {
+:root:not([data-theme='light']) .sidebar-filters button,
+[data-theme='dark'] .sidebar-filters button {
     color: #a1a1aa;
 }
 
-:root:not([data-theme='light']) .map-filters button:hover,
-[data-theme='dark'] .map-filters button:hover {
+:root:not([data-theme='light']) .sidebar-filters button:hover,
+[data-theme='dark'] .sidebar-filters button:hover {
     background: rgba(67, 97, 238, 0.2);
     color: #a5b4fc;
     border-color: rgba(67, 97, 238, 0.4);
 }
 
-:root:not([data-theme='light']) .map-filters button.active,
-[data-theme='dark'] .map-filters button.active {
+:root:not([data-theme='light']) .sidebar-filters button.active,
+[data-theme='dark'] .sidebar-filters button.active {
     background: #4361EE;
     color: white;
 }

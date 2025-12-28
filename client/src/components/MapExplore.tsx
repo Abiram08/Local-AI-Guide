@@ -57,19 +57,6 @@ export const MapExplore: React.FC = () => {
     return (
         <div className="map-explore-container">
             <div className="map-wrapper">
-                {/* Filter Bar - Glass Effect, positioned over map */}
-                <div className="map-filters">
-                    {categories.map(cat => (
-                        <button
-                            key={cat}
-                            className={filter === cat ? 'active' : ''}
-                            onClick={() => { setFilter(cat); setSelected(null); }}
-                        >
-                            {categoryLabels[cat]}
-                        </button>
-                    ))}
-                </div>
-
                 <MapContainer
                     center={goaCenter}
                     zoom={10}
@@ -112,6 +99,19 @@ export const MapExplore: React.FC = () => {
             </div>
 
             <div className="map-sidebar">
+                {/* Filter Bar - Above the list */}
+                <div className="sidebar-filters">
+                    {categories.map(cat => (
+                        <button
+                            key={cat}
+                            className={filter === cat ? 'active' : ''}
+                            onClick={() => { setFilter(cat); setSelected(null); }}
+                        >
+                            {categoryLabels[cat]}
+                        </button>
+                    ))}
+                </div>
+
                 <div className="sidebar-header">
                     <h4>{categoryLabels[filter]}</h4>
                     <span>{filteredLandmarks.length} spots</span>
@@ -135,3 +135,4 @@ export const MapExplore: React.FC = () => {
         </div>
     );
 };
+

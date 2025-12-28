@@ -132,9 +132,22 @@ Example:
         const rawResponse = await callAI(systemPrompt, message);
         let parsed;
         try {
+            // Try to parse as pure JSON first
             parsed = JSON.parse(rawResponse);
         } catch (e) {
-            parsed = { reply: rawResponse, metadata: {} };
+            // If JSON parsing fails, try to extract JSON from the response
+            const jsonMatch = rawResponse.match(/\{[\s\S]*"reply"[\s\S]*\}/);
+            if (jsonMatch) {
+                try {
+                    parsed = JSON.parse(jsonMatch[0]);
+                } catch (e2) {
+                    // If still fails, use the raw response but clean it
+                    const cleanResponse = rawResponse.replace(/\{[\s\S]*\}$/m, '').trim();
+                    parsed = { reply: cleanResponse || rawResponse, metadata: {} };
+                }
+            } else {
+                parsed = { reply: rawResponse, metadata: {} };
+            }
         }
 
         // 4. Store in RDS

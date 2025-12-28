@@ -13,7 +13,24 @@ interface PersonalityPanelProps {
     onClose?: () => void;
 }
 
+const getPersonaInfo = (persona: any): { name: string; description: string; emoji: string } => {
+    const personaType = persona?.type || persona?.persona || 'EXPLORER';
+
+    const personaMap: Record<string, { name: string; description: string; emoji: string }> = {
+        'ADVENTUROUS': { name: 'Adventurer', description: 'Seeks hidden gems and authentic local experiences', emoji: '🏄' },
+        'SAFETY_CONSCIOUS': { name: 'Careful Explorer', description: 'Prioritizes safety while discovering new places', emoji: '🛡️' },
+        'CULTURAL_LEARNER': { name: 'Culture Enthusiast', description: 'Loves history, heritage and local traditions', emoji: '🏛️' },
+        'LUXURY_SEEKER': { name: 'Comfort Traveler', description: 'Enjoys premium experiences and comfort', emoji: '✨' },
+        'BUDGET_AWARE': { name: 'Smart Traveler', description: 'Finds the best value and local prices', emoji: '💰' },
+        'EXPLORER': { name: 'Explorer', description: 'Discovering Goa one conversation at a time', emoji: '🧭' },
+    };
+
+    return personaMap[personaType] || personaMap['EXPLORER'];
+};
+
 export const PersonalityPanel: React.FC<PersonalityPanelProps> = ({ persona, stats, isOpen, onClose }) => {
+    const personaInfo = getPersonaInfo(persona);
+
     return (
         <aside className={`personality-panel ${isOpen ? 'open' : ''}`}>
             <div className="panel-header">
@@ -25,37 +42,18 @@ export const PersonalityPanel: React.FC<PersonalityPanelProps> = ({ persona, sta
                 <h4 className="section-title">
                     <span className="icon">👤</span> Travel Persona
                 </h4>
-                {persona ? (
-                    <div className="persona-info">
-                        <div className="persona-badge">{persona.persona}</div>
-                        <p className="description">
-                            {persona.persona === 'ADVENTUROUS' && 'Seeks authenticity, takes risks. Loves hidden gems and local hangouts.'}
-                            {persona.persona === 'SAFETY_CONSCIOUS' && 'Prioritizes safety and verified local guides for solo exploration.'}
-                            {persona.persona === 'CULTURAL_LEARNER' && 'Respects traditions. Interested in historical context and heritage.'}
-                            {persona.persona === 'LUXURY_SEEKER' && 'Comfort-focused while seeking high-quality authentic experiences.'}
-                            {persona.persona === 'BUDGET_AWARE' && 'Price-sensitive. Always looking for fair local prices and value.'}
-                        </p>
-                        <div className="confidence-meter">
-                            <div className="meter-label">
-                                <span>Confidence</span>
-                                <span>{(persona.confidence * 100).toFixed(0)}%</span>
-                            </div>
-                            <div className="meter-bar">
-                                <div
-                                    className="meter-fill"
-                                    style={{ width: `${persona.confidence * 100}%` }}
-                                ></div>
-                            </div>
-                        </div>
+                <div className="persona-info">
+                    <div className="persona-badge">
+                        <span className="persona-emoji">{personaInfo.emoji}</span>
+                        <span className="persona-name">{personaInfo.name}</span>
                     </div>
-                ) : (
-                    <p className="placeholder">Start chatting to discover your persona...</p>
-                )}
+                    <p className="description">{personaInfo.description}</p>
+                </div>
             </section>
 
             <section className="panel-section stats">
                 <h4 className="section-title">
-                    <span className="icon">📊</span> Live Statistics
+                    <span className="icon">📊</span> Session Stats
                 </h4>
                 <div className="stats-grid">
                     <div className="stat-item">
@@ -63,22 +61,12 @@ export const PersonalityPanel: React.FC<PersonalityPanelProps> = ({ persona, sta
                         <span className="value">{stats.messages}</span>
                     </div>
                     <div className="stat-item">
-                        <span className="label">🏠 Spots</span>
+                        <span className="label">🏠 Spots Discovered</span>
                         <span className="value">{stats.spots}</span>
-                    </div>
-                    <div className="stat-item wide">
-                        <span className="label">📍 Neighborhoods</span>
-                        <div className="tag-cloud">
-                            {stats.neighborhoods.map(n => <span key={n} className="tag">{n}</span>)}
-                            {stats.neighborhoods.length === 0 && <span className="placeholder">None yet</span>}
-                        </div>
-                    </div>
-                    <div className="stat-item wide">
-                        <span className="label">💰 Budget Range</span>
-                        <span className="value">₹{stats.budget[0]} - ₹{stats.budget[1]}</span>
                     </div>
                 </div>
             </section>
         </aside>
     );
 };
+
