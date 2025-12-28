@@ -285,7 +285,8 @@ app.post('/api/recommend-activities', async (req: Request, res: Response) => {
 
 // Serve static files from React build in production
 if (process.env.NODE_ENV === 'production') {
-    const clientBuildPath = path.join(__dirname, '../client/build');
+    const clientBuildPath = path.join(process.cwd(), 'client/build');
+    console.log('📁 Serving static files from:', clientBuildPath);
     app.use(express.static(clientBuildPath));
 
     // SPA fallback - serve index.html for any non-API routes
