@@ -235,6 +235,19 @@ function App() {
         setSavedMessages(prev => prev.filter(m => m.id !== msgId));
     };
 
+    // Clear chat history for privacy
+    const handleClearChat = () => {
+        setMessages(getDefaultMessages());
+        localStorage.removeItem('chatHistory');
+        setStats({
+            messages: 1,
+            spots: 0,
+            neighborhoods: [],
+            budget: [0, 0]
+        });
+        setPersona(null);
+    };
+
     return (
         <div className="app-shell">
             {/* Voice Visualizer Overlay */}
@@ -261,6 +274,9 @@ function App() {
                 </nav>
 
                 <div className="header-right">
+                    <button className="new-chat-btn" onClick={handleClearChat} title="New Chat">
+                        ✨ New
+                    </button>
                     <button className="theme-toggle" onClick={toggleTheme} title={theme === 'light' ? 'Dark mode' : 'Light mode'}>
                         {theme === 'light' ? '🌙' : '☀️'}
                     </button>
@@ -377,6 +393,7 @@ function App() {
                     stats={stats}
                     isOpen={isSidebarOpen}
                     onClose={() => setSidebarOpen(false)}
+                    onClearChat={handleClearChat}
                 />
             </main>
         </div>

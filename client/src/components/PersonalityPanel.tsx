@@ -11,6 +11,7 @@ interface PersonalityPanelProps {
     };
     isOpen: boolean;
     onClose?: () => void;
+    onClearChat?: () => void;
 }
 
 const getPersonaInfo = (persona: any): { name: string; description: string; emoji: string } => {
@@ -28,7 +29,7 @@ const getPersonaInfo = (persona: any): { name: string; description: string; emoj
     return personaMap[personaType] || personaMap['EXPLORER'];
 };
 
-export const PersonalityPanel: React.FC<PersonalityPanelProps> = ({ persona, stats, isOpen, onClose }) => {
+export const PersonalityPanel: React.FC<PersonalityPanelProps> = ({ persona, stats, isOpen, onClose, onClearChat }) => {
     const personaInfo = getPersonaInfo(persona);
 
     return (
@@ -65,6 +66,12 @@ export const PersonalityPanel: React.FC<PersonalityPanelProps> = ({ persona, sta
                         <span className="value">{stats.spots}</span>
                     </div>
                 </div>
+            </section>
+
+            <section className="panel-section actions">
+                <button className="clear-chat-btn" onClick={onClearChat}>
+                    🗑️ Clear Chat History
+                </button>
             </section>
         </aside>
     );

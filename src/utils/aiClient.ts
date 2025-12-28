@@ -137,16 +137,31 @@ function generateDemoResponse(userPrompt: string): string {
 export async function callAI(
     systemPrompt: string,
     userPrompt: string,
+    conversationHistory: Array<{ role: string, content: string }> = [],
     maxTokens: number = 1024
 ): Promise<string> {
+    // Build messages array with history for context
+    const messages: Array<{ role: 'system' | 'user' | 'assistant', content: string }> = [
+        { role: "system", content: systemPrompt },
+    ];
+
+    // Add last 6 messages from history for context (to stay within limits)
+    const recentHistory = conversationHistory.slice(-6);
+    for (const msg of recentHistory) {
+        messages.push({
+            role: msg.role as 'user' | 'assistant',
+            content: msg.content
+        });
+    }
+
+    // Add current message
+    messages.push({ role: "user", content: userPrompt });
+
     // Try Groq API first (primary provider)
     if (groqClient) {
         try {
             const completion = await groqClient.chat.completions.create({
-                messages: [
-                    { role: "system", content: systemPrompt },
-                    { role: "user", content: userPrompt },
-                ],
+                messages,
                 model: "llama-3.3-70b-versatile",
                 max_tokens: maxTokens,
                 temperature: 0.7,

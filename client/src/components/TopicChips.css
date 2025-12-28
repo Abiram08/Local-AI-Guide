@@ -1,27 +1,32 @@
 /* ========================================
    TOPIC CHIPS STYLES
-   Clean, tappable category selection
+   Premium Glassmorphism Design
    ======================================== */
 
 .topic-chips-container {
-    padding: var(--space-4);
-    background: var(--bg-tertiary);
-    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    background: linear-gradient(135deg, rgba(67, 97, 238, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%);
+    border-radius: var(--radius-xl);
     margin-top: var(--space-4);
+    border: 1px solid rgba(67, 97, 238, 0.15);
+    backdrop-filter: blur(10px);
 }
 
 .chips-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--text-tertiary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin: 0 0 var(--space-3) 0;
+    letter-spacing: 1px;
+    margin: 0 0 var(--space-4) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
 }
 
 .topic-chips {
     display: flex;
-    gap: var(--space-2);
+    gap: var(--space-3);
     flex-wrap: wrap;
 }
 
@@ -29,67 +34,94 @@
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
+    padding: 10px 18px;
     border-radius: var(--radius-full);
     border: none;
-    font-size: 0.875rem;
-    font-weight: 500;
-    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: var(--font-display);
     cursor: pointer;
-    transition: all var(--transition-fast);
-    box-shadow: var(--shadow-xs);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.topic-chip::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.topic-chip:hover::before {
+    opacity: 1;
 }
 
 .topic-chip .chip-icon {
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 .topic-chip .chip-label {
-    font-weight: 500;
+    font-weight: 600;
 }
 
-/* Color Variants - All with same Blue Hover */
+/* Color Variants - Gradient Backgrounds */
 .topic-chip.teal {
-    background: #e0f2fe;
-    color: #0369a1;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: white;
 }
 
 .topic-chip.coral {
-    background: #fef2f2;
-    color: #9A3412;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: white;
 }
 
 .topic-chip.gold {
-    background: #fef9c3;
-    color: #854D0E;
+    background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+    color: white;
 }
 
 .topic-chip.purple {
-    background: #F3E8FF;
-    color: #6B21A8;
-}
-
-/* Universal Blue Hover Effect for All Chips */
-.topic-chip:hover {
-    background: #4361EE;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
-    transform: translateY(-2px);
+}
+
+.topic-chip.green {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+}
+
+/* Universal Hover Effect */
+.topic-chip:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(67, 97, 238, 0.35);
+}
+
+.topic-chip:active {
+    transform: translateY(-1px) scale(1.02);
 }
 
 
-/* Example Questions */
+/* Example Questions - Premium Cards */
 .example-questions {
-    margin-top: var(--space-4);
-    padding-top: var(--space-3);
-    border-top: 1px solid var(--border-light);
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(67, 97, 238, 0.1);
 }
 
 .examples-label {
-    font-size: 0.75rem;
-    font-weight: 500;
+    font-size: 0.7rem;
+    font-weight: 600;
     color: var(--text-tertiary);
-    margin: 0 0 var(--space-2) 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 var(--space-3) 0;
 }
 
 .examples-list {
@@ -99,23 +131,43 @@
 }
 
 .examples-list button {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-md);
-    padding: var(--space-3);
-    font-size: 0.8125rem;
+    background: white;
+    border: 1px solid rgba(67, 97, 238, 0.15);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-4);
+    font-size: 0.85rem;
     color: var(--text-secondary);
     text-align: left;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     font-style: italic;
     font-family: var(--font-body);
+    position: relative;
+    overflow: hidden;
+}
+
+.examples-list button::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(135deg, #4361EE, #8b5cf6);
+    transform: scaleY(0);
+    transition: transform 0.25s;
 }
 
 .examples-list button:hover {
-    background: var(--primary-100);
-    border-color: var(--primary-500);
-    color: var(--primary-700);
+    background: linear-gradient(135deg, rgba(67, 97, 238, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%);
+    border-color: #4361EE;
+    color: #4361EE;
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.1);
+}
+
+.examples-list button:hover::before {
+    transform: scaleY(1);
 }
 
 /* ========================================
@@ -124,12 +176,12 @@
 
 @media (max-width: 480px) {
     .topic-chips {
-        gap: var(--space-1);
+        gap: var(--space-2);
     }
 
     .topic-chip {
-        padding: var(--space-2) var(--space-3);
-        font-size: 0.8125rem;
+        padding: 8px 14px;
+        font-size: 0.8rem;
     }
 }
 
@@ -139,37 +191,13 @@
 
 :root:not([data-theme='light']) .topic-chips-container,
 [data-theme='dark'] .topic-chips-container {
-    background: rgba(30, 30, 30, 0.8);
-    border: 1px solid var(--border-light);
+    background: linear-gradient(135deg, rgba(67, 97, 238, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%);
+    border-color: rgba(67, 97, 238, 0.25);
 }
 
 :root:not([data-theme='light']) .chips-label,
 [data-theme='dark'] .chips-label {
     color: var(--text-secondary);
-}
-
-:root:not([data-theme='light']) .topic-chip.teal,
-[data-theme='dark'] .topic-chip.teal {
-    background: rgba(14, 165, 233, 0.2);
-    color: #7dd3fc;
-}
-
-:root:not([data-theme='light']) .topic-chip.coral,
-[data-theme='dark'] .topic-chip.coral {
-    background: rgba(239, 68, 68, 0.2);
-    color: #fca5a5;
-}
-
-:root:not([data-theme='light']) .topic-chip.gold,
-[data-theme='dark'] .topic-chip.gold {
-    background: rgba(245, 158, 11, 0.2);
-    color: #fcd34d;
-}
-
-:root:not([data-theme='light']) .topic-chip.purple,
-[data-theme='dark'] .topic-chip.purple {
-    background: rgba(139, 92, 246, 0.2);
-    color: #c4b5fd;
 }
 
 :root:not([data-theme='light']) .examples-list button,
@@ -181,7 +209,7 @@
 
 :root:not([data-theme='light']) .examples-list button:hover,
 [data-theme='dark'] .examples-list button:hover {
-    background: rgba(67, 97, 238, 0.2);
+    background: rgba(67, 97, 238, 0.15);
     border-color: #4361EE;
     color: #a5b4fc;
 }
