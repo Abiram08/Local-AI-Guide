@@ -298,14 +298,37 @@ app.post('/api/recommend-activities', async (req: Request, res: Response) => {
 
 // Serve static files from React build in production
 if (process.env.NODE_ENV === 'production') {
-    const clientBuildPath = path.join(process.cwd(), 'client/build');
-    console.log('📁 Serving static files from:', clientBuildPath);
+    const fs = require('fs');
+
+    // Try multiple possible paths for the client build
+    const possiblePaths = [
+        path.join(process.cwd(), 'client', 'build'),
+        path.join(__dirname, '..', 'client', 'build'),
+        path.join(__dirname, 'client', 'build'),
+    ];
+
+    let clientBuildPath = possiblePaths[0]; // Default
+    for (const p of possiblePaths) {
+        console.log(`📁 Checking path: ${p}`);
+        if (fs.existsSync(p)) {
+            clientBuildPath = p;
+            console.log(`✅ Found build at: ${p}`);
+            break;
+        }
+    }
+
+    console.log(`📁 Serving static files from: ${clientBuildPath}`);
     app.use(express.static(clientBuildPath));
 
     // SPA fallback - serve index.html for any non-API routes
     app.get('*', (req: Request, res: Response) => {
         if (!req.path.startsWith('/api')) {
-            res.sendFile(path.join(clientBuildPath, 'index.html'));
+            const indexPath = path.join(clientBuildPath, 'index.html');
+            if (fs.existsSync(indexPath)) {
+                res.sendFile(indexPath);
+            } else {
+                res.status(404).send('Build not found. Check Railway build logs.');
+            }
         } else {
             res.status(404).json({
                 error: 'Endpoint not found',
