@@ -1,13 +1,13 @@
 # Dependencies
 node_modules/
-package-lock.json
 
-# Build outputs
+# Build outputs (server only)
 dist/
-*.js
-*.js.map
-*.d.ts
+/src/**/*.js
+/src/**/*.js.map
+/src/**/*.d.ts
 /Markdownfolders
+
 # Environment variables
 .env
 .env.local
@@ -31,3 +31,4 @@ coverage/
 
 # AWS
 .aws/
+
