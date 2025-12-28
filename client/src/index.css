@@ -171,6 +171,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
+    zoom: 0.85;
 }
 
 h1,

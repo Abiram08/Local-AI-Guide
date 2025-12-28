@@ -938,6 +938,36 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
 }
 
+/* Dark mode overrides for personality panel */
+:root:not([data-theme='light']) .persona-info,
+:root:not([data-theme='light']) .stat-item {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--border-light) !important;
+}
+
+:root:not([data-theme='light']) .persona-info .description,
+:root:not([data-theme='light']) .stat-item .label {
+  color: var(--text-secondary) !important;
+}
+
+:root:not([data-theme='light']) .stat-item .value {
+  color: var(--text-primary) !important;
+}
+
+:root:not([data-theme='light']) .panel-header {
+  background: var(--bg-tertiary) !important;
+}
+
+:root:not([data-theme='light']) .panel-close {
+  background: var(--bg-elevated) !important;
+  border-color: var(--border-medium) !important;
+  color: var(--text-secondary) !important;
+}
+
+:root:not([data-theme='light']) .placeholder {
+  color: var(--text-tertiary) !important;
+}
+
 /* ========================================
    SAVED & MAP VIEWS
    ======================================== */

@@ -6,11 +6,14 @@
 
 **Experience Goa like a local with intelligent, voice-enabled travel assistance**
 
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Railway-blueviolet)](https://local-ai-guide-production.up.railway.app/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.2-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Groq](https://img.shields.io/badge/Groq-AI-F55036)](https://groq.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+**🔗 [Try the Live Demo →](https://local-ai-guide-production.up.railway.app/)**
 
 [Features](#-features) • [Demo](#-demo) • [Quick Start](#-quick-start) • [Architecture](#-architecture) • [API Reference](#-api-reference) • [Deployment](#-deployment)
 
