@@ -1,410 +1,493 @@
 # Implementation Plan
 
 - [x] 1. Set up project structure and core interfaces
-  - Create directory structure for agents, types, utils, and client components
+  - Create directory structure for agents, types, utils, client components, and knowledge base
   - Define TypeScript interfaces for all agent inputs/outputs and system types
-  - Set up testing framework with Jest and fast-check for property-based testing
+  - Set up knowledge base with 8 domain-specific markdown files
   - Configure build system with TypeScript compilation and development scripts
-  - _Requirements: 1.1, 2.1, 3.1, 4.1, 5.1, 6.1_
+  - _Requirements: 1.1, 1.2, 1.3, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, 10.1, 11.1, 12.1, 13.1, 14.1_
 
-- [x] 1.1 Create core TypeScript type definitions
-  - Write comprehensive interfaces for TouristPersona, GuideMatch, CrowdPrediction, PriceAnalysis, SafetyResponse, and Itinerary
+- [x] 1.1 Create comprehensive TypeScript type definitions
+  - Write interfaces for TouristPersona, GuideMatch, CrowdPrediction, PriceAnalysis, SafetyResponse, and Itinerary
   - Define UserInput and OrchestratorResponse interfaces for main API
-  - Create venue, guide, and activity data structures
-  - _Requirements: 1.5, 2.5, 3.1, 4.3, 5.4, 6.5_
+  - Create accommodation, food, transport, market, and activity data structures
+  - Add conversational AI and voice interface type definitions
+  - _Requirements: 1.4, 2.5, 3.1, 4.3, 5.4, 6.5, 7.2, 12.3_
 
 - [x]* 1.2 Write property test for type structure validation
-  - **Property 4: Persona structure completeness**
-  - **Validates: Requirements 1.4, 1.5**
+  - **Property 4: Type structure completeness**
+  - **Validates: Requirements 1.4, 2.5**
 
-- [x] 1.3 Set up AI client utility with Groq integration
-  - Implement callAI function with error handling and retry logic
+- [x] 1.3 Set up multi-provider AI client utility
+  - Implement callAI function with Groq API (primary), AWS Bedrock (fallback), and Demo Mode
   - Create parseAIResponse utility for JSON parsing with fallback handling
-  - Configure Groq client with proper API key management
-  - _Requirements: 9.1, 9.5_
+  - Configure multi-provider client with proper API key management and error handling
+  - Add demo response generation with local Goan personality
+  - _Requirements: 14.1, 14.2_
 
 - [x]* 1.4 Write property test for AI client error handling
-  - **Property 29: Fallback mechanism activation**
-  - **Validates: Requirements 9.1**
+  - **Property 19: Fallback mechanism activation**
+  - **Validates: Requirements 14.1**
 
-- [x] 2. Implement Tourist Profiler (Agent 1)
-  - Create profileTourist function that analyzes app interactions
-  - Implement interest scoring algorithm for 5 categories (adventure, food, culture, nightlife, relaxation)
-  - Build persona classification logic with confidence calculation
-  - Add fallback mechanism using heuristic analysis when AI service fails
+- [x] 2. Create knowledge base system
+  - Build 8 domain-specific markdown files (accommodation, food_restaurants, transport, markets, activities, safety, pricing, crowds)
+  - Implement knowledge base utility (kb.ts) for unified access to all domains
+  - Create getDomain function for retrieving specific domain content
+  - Add data extraction utilities for parsing markdown content
+  - _Requirements: 2.1, 3.1, 4.1, 8.1, 9.1, 10.1, 11.1_
+
+- [x] 2.1 Build accommodation knowledge base
+  - Create accommodation.md with Hostel, Budget, Mid-Range, Luxury categories
+  - Include location data, pricing, amenities, vibes, ratings, and contact information
+  - Add best_for categories and noise level information
+  - _Requirements: 4.1, 4.2, 4.3_
+
+- [x] 2.2 Build food & restaurants knowledge base
+  - Create food_restaurants.md with restaurant details and cuisine types
+  - Include signature dishes, price ranges, ratings, and ambiance descriptions
+  - Add local tips, cultural significance, pricing hacks, and safety warnings
+  - _Requirements: 8.1, 8.2, 8.3_
+
+- [x] 2.3 Build transport knowledge base
+  - Create transport.md with GoaMiles, auto-rickshaw, scooter rental, private taxi options
+  - Include pricing, booking methods, safety considerations, and pros/cons
+  - Add night surcharge information and scam warnings
+  - _Requirements: 9.1, 9.2, 9.3_
+
+- [x] 2.4 Build markets knowledge base
+  - Create markets.md with flea, night, local market types
+  - Include operating schedules, specialties, price ranges, and bargaining tips
+  - Add what to buy categories and crowd level information
+  - _Requirements: 10.1, 10.2, 10.3_
+
+- [x] 2.5 Build activities knowledge base
+  - Create activities.md with waterfalls, nightlife, wellness, heritage, adventure categories
+  - Include entry fees, duration, difficulty levels, best times, and equipment requirements
+  - Add safety guidelines and seasonal availability information
+  - _Requirements: 11.1, 11.2, 11.3_
+
+- [x] 2.6 Build safety and pricing knowledge bases
+  - Create safety.md with risk assessment, emergency contacts, and women-specific guidelines
+  - Create pricing.md with cost breakdowns, location premiums, and exploitation thresholds
+  - Create crowds.md with historical data, seasonal multipliers, and alternative suggestions
+  - _Requirements: 2.1, 2.2, 3.1, 3.2_
+
+- [x] 3. Implement Adaptive Dispatcher
+  - Create intelligent routing system that detects missing vital information
+  - Implement friendly guidance system for incomplete user inputs
+  - Build validation logic for budget, date, and group_type requirements
+  - Add conversational messaging for information collection
   - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5_
 
-- [x] 2.1 Build behavioral analysis algorithm
-  - Implement click pattern analysis and search query processing
-  - Create time-spent weighting system for interest calculation
-  - Build confidence scoring based on data completeness
+- [x] 3.1 Build information completeness detection
+  - Implement missing field identification for budget, date, group_type
+  - Create validation rules with appropriate error messaging
+  - Build progressive information collection strategies
   - _Requirements: 1.1, 1.2_
 
-- [x]* 2.2 Write property test for persona confidence threshold
-  - **Property 1: Persona confidence threshold**
+- [x]* 3.2 Write property test for missing information detection
+  - **Property 1: Missing information detection**
   - **Validates: Requirements 1.1**
 
-- [x]* 2.3 Write property test for complete interest scoring
-  - **Property 2: Complete interest scoring**
+- [x]* 3.3 Write property test for needs info response format
+  - **Property 2: Needs info response format**
   - **Validates: Requirements 1.2**
 
-- [x] 2.4 Implement fallback persona generation
-  - Create heuristic-based persona generation for insufficient data
-  - Build default interest categorization system
-  - Implement budget estimation from filter data
+- [x] 3.4 Implement full orchestration trigger
+  - Create logic to proceed with complete information
+  - Build agent coordination initiation system
+  - Implement validation for complete user inputs
   - _Requirements: 1.3, 1.4_
 
-- [x]* 2.5 Write property test for fallback persona generation
-  - **Property 3: Fallback persona generation**
+- [x]* 3.5 Write property test for complete information orchestration
+  - **Property 3: Complete information orchestration**
   - **Validates: Requirements 1.3**
 
-- [x] 3. Implement Guide Matcher (Agent 2)
-  - Create matchGuide function with ML scoring algorithm (40-point system)
-  - Implement scoring components: language match (10pts), specialty alignment (10pts), rating (10pts), availability (5pts), personality fit (5pts)
-  - Build guide ranking system returning top 3 matches with detailed reasons
-  - Add fallback mechanism with hardcoded top-rated guides
+- [x] 4. Implement The Shield (Price Intelligence + Safety Guardian)
+  - Create combined protection system using pricing and safety knowledge bases
+  - Implement fair pricing calculation with cost breakdown analysis from pricing.md
+  - Build exploitation detection system using thresholds from pricing knowledge base
+  - Create risk assessment system using safety.md data for location and time analysis
+  - Add emergency contact provision and safety alert generation from safety knowledge base
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5_
 
-- [x] 3.1 Build ML scoring algorithm
-  - Implement 40-point scoring system with component validation
-  - Create language matching logic with multi-language support
-  - Build specialty alignment scoring based on interest overlap
-  - _Requirements: 2.1, 2.2_
+- [x] 4.1 Build fair pricing calculation system
+  - Implement cost breakdown parsing from pricing.md knowledge base
+  - Create location premium factors and markup calculations from pricing data
+  - Build price verification against knowledge base fair price ranges
+  - _Requirements: 2.1, 2.3_
 
-- [x]* 3.2 Write property test for guide scoring bounds
-  - **Property 5: Guide scoring bounds**
+- [x]* 4.2 Write property test for fair price calculation completeness
+  - **Property 4: Fair price calculation completeness**
   - **Validates: Requirements 2.1**
 
-- [x]* 3.3 Write property test for scoring component validation
-  - **Property 6: Scoring component validation**
+- [x] 4.3 Implement exploitation detection system
+  - Create price comparison logic using thresholds from pricing.md
+  - Build market price analysis with typical charge tracking from knowledge base
+  - Implement exploitation flagging and alternative suggestions
+  - _Requirements: 2.2, 2.4_
+
+- [x]* 4.4 Write property test for exploitation detection threshold
+  - **Property 5: Exploitation detection threshold**
   - **Validates: Requirements 2.2**
 
-- [x] 3.4 Implement guide ranking and selection
-  - Create top-3 guide selection with score-based ranking
-  - Build match reason generation explaining selection criteria
-  - Implement guide information completeness validation
-  - _Requirements: 2.3, 2.5_
+- [x] 4.5 Build safety assessment system
+  - Implement risk level calculation using safety.md location and time data
+  - Create alert generation with categorization from safety knowledge base
+  - Build emergency contact provision system using safety.md contact database
+  - _Requirements: 2.3, 2.4, 2.5_
 
-- [x]* 3.5 Write property test for top guide ranking
-  - **Property 7: Top guide ranking**
-  - **Validates: Requirements 2.3**
-
-- [x]* 3.6 Write property test for guide information completeness
-  - **Property 8: Guide information completeness**
-  - **Validates: Requirements 2.5**
-
-- [x] 4. Implement Crowd Manager (Agent 3)
-  - Create manageCrowds function with ML-based crowd prediction
-  - Implement current and 30-minute future crowd level predictions using historical data
-  - Build crowd threshold classification (1000+ people = CROWDED/VERY_CROWDED)
-  - Create alternative venue suggestion system with ranking algorithm
-  - Add fallback mechanism using time-based estimation
+- [x] 5. Implement The Scout (Crowd Manager)
+  - Create crowd prediction system using crowds.md knowledge base data
+  - Implement current and future crowd level predictions using historical data and seasonal factors
+  - Build crowd threshold classification using capacity data from crowds knowledge base
+  - Create alternative venue suggestion system using crowds.md alternative data
+  - Add seasonal factor integration and weather impact analysis
   - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
 
-- [x] 4.1 Build crowd prediction algorithm
-  - Implement historical data analysis with weather impact factors
-  - Create ML model simulation with 85%+ confidence predictions
-  - Build time-based multipliers for day/hour variations
+- [x] 5.1 Build crowd prediction algorithm
+  - Implement historical data analysis using crowds.md seasonal multipliers
+  - Create prediction simulation using occupancy percentages from knowledge base
+  - Build time-based and weather impact factor calculations
   - _Requirements: 3.1, 3.5_
 
-- [x]* 4.2 Write property test for crowd prediction generation
-  - **Property 9: Crowd prediction generation**
+- [x]* 5.2 Write property test for crowd prediction generation
+  - **Property 6: Crowd prediction generation**
   - **Validates: Requirements 3.1**
 
-- [x]* 4.3 Write property test for prediction confidence threshold
-  - **Property 12: Prediction confidence threshold**
-  - **Validates: Requirements 3.5**
-
-- [x] 4.4 Implement crowd threshold classification
-  - Create status classification logic (LOW/MODERATE/CROWDED/VERY_CROWDED)
-  - Build threshold-based decision system with 1000-person limit
+- [x] 5.3 Implement crowd threshold classification
+  - Create status classification logic using crowds.md capacity data
+  - Build threshold-based decision system using knowledge base occupancy percentages
   - _Requirements: 3.2_
 
-- [x]* 4.5 Write property test for crowd threshold classification
-  - **Property 10: Crowd threshold classification**
+- [x]* 5.4 Write property test for crowd threshold classification
+  - **Property 7: Crowd threshold classification**
   - **Validates: Requirements 3.2**
 
-- [x] 4.6 Build alternative venue suggestion system
-  - Create alternative ranking algorithm considering crowd, rating, and travel time
-  - Implement venue similarity matching for appropriate alternatives
+- [x] 5.5 Build alternative venue suggestion system
+  - Create alternative ranking using crowds.md alternative venue data
+  - Implement venue similarity matching using knowledge base ratings and travel times
   - _Requirements: 3.3, 3.4_
 
-- [x]* 4.7 Write property test for alternative venue suggestions
-  - **Property 11: Alternative venue suggestions**
-  - **Validates: Requirements 3.3**
-
-- [x] 5. Implement Price Intelligence (Agent 4)
-  - Create analyzePrices function with fair pricing calculation
-  - Implement cost breakdown algorithm: ingredients + labor + location premium + utilities + 30% markup
-  - Build exploitation detection system flagging prices >50% above fair price
-  - Create GoanFlow pricing with 15% discount due to guaranteed bookings
-  - Add fallback mechanism using predefined cost structures
+- [x] 6. Implement The Stays (Accommodation Agent)
+  - Create personalized lodging recommendation system using accommodation.md knowledge base
+  - Implement persona-based matching for group type, budget, and interests using accommodation data
+  - Build comprehensive accommodation database integration with all categories
+  - Create safety scoring and fair pricing verification using accommodation knowledge base
+  - Add detailed reasoning and feature highlighting for recommendations
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
-- [x] 5.1 Build fair pricing calculation algorithm
-  - Implement ingredient cost calculation from knowledge base
-  - Create location premium factors (beach +25%, commercial -10%, residential +5%)
-  - Build labor and utilities cost allocation system
+- [x] 6.1 Build accommodation matching algorithm
+  - Implement persona analysis using accommodation.md category and best_for data
+  - Create accommodation filtering and ranking system using knowledge base
+  - Build safety scoring and amenity alignment logic using accommodation data
   - _Requirements: 4.1, 4.3_
 
-- [x]* 5.2 Write property test for fair price calculation
-  - **Property 13: Fair price calculation**
+- [x]* 6.2 Write property test for accommodation matching criteria
+  - **Property 8: Accommodation matching criteria**
   - **Validates: Requirements 4.1**
 
-- [x]* 5.3 Write property test for cost breakdown completeness
-  - **Property 15: Cost breakdown completeness**
-  - **Validates: Requirements 4.3**
-
-- [x] 5.4 Implement exploitation detection system
-  - Create price comparison logic with 50% threshold
-  - Build market price analysis with typical charge tracking
-  - Implement exploitation flagging and warning system
-  - _Requirements: 4.2, 4.4_
-
-- [x]* 5.5 Write property test for exploitation detection threshold
-  - **Property 14: Exploitation detection threshold**
-  - **Validates: Requirements 4.2, 4.4**
-
-- [x] 5.6 Create GoanFlow pricing system
-  - Implement 15% discount calculation for negotiated prices
-  - Build price recommendation system with fair price validation
-  - _Requirements: 4.5_
-
-- [x]* 5.7 Write property test for GoanFlow pricing discount
-  - **Property 16: GoanFlow pricing discount**
-  - **Validates: Requirements 4.5**
-
-- [x] 6. Implement Safety Guardian (Agent 6)
-  - Create checkSafety function with risk assessment on 1-10 scale
-  - Implement alert generation system with type categorization (WEATHER, CRIME, HEALTH, WOMEN_SAFETY, TRAFFIC, EVENT)
-  - Build severity classification (HIGH, MEDIUM, INFO) with appropriate actions
-  - Create emergency contact provision system with location-specific contacts
-  - Add enhanced safety guidance for solo female travelers after 10 PM
+- [x] 6.3 Implement accommodation recommendation system
+  - Create detailed recommendation generation using accommodation.md data
+  - Build comprehensive information display using knowledge base details
+  - Implement fair pricing verification and safety score integration
+  - _Requirements: 4.2, 4.4, 4.5_
+- [x] 7. Implement The Navigator (Experience Curator)
+  - Create master orchestration system coordinating all Core 4 and specialized agents
+  - Implement budget constraint satisfaction and cost optimization using knowledge base pricing
+  - Build scheduling system avoiding peak crowds with travel buffers using crowd data
+  - Create safety-first decision making with itinerary modifications using safety knowledge base
+  - Generate comprehensive hour-by-hour schedules with complete information and cultural context
   - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
 
-- [x] 6.1 Build risk assessment algorithm
-  - Implement 1-10 risk level calculation considering time, location, and profile
-  - Create location/time risk matrices for different areas
-  - Build tourist profile risk factor analysis
+- [x] 7.1 Build agent orchestration system
+  - Create coordination logic for Shield, Scout, Stays, and all specialist agents
+  - Implement data integration combining all agent outputs using knowledge base data
+  - Build constraint satisfaction algorithm balancing requirements and cultural context
   - _Requirements: 5.1_
 
-- [x]* 6.2 Write property test for risk level bounds
-  - **Property 17: Risk level bounds**
+- [x]* 7.2 Write property test for agent orchestration completeness
+  - **Property 9: Agent orchestration completeness**
   - **Validates: Requirements 5.1**
 
-- [x] 6.3 Implement alert generation and categorization
-  - Create alert type classification system with 6 categories
-  - Build severity assessment logic (HIGH/MEDIUM/INFO)
-  - Implement action recommendation system for each alert type
-  - _Requirements: 5.2, 5.3_
-
-- [x]* 6.4 Write property test for alert categorization
-  - **Property 18: Alert categorization**
-  - **Validates: Requirements 5.2**
-
-- [x] 6.5 Build emergency contact system
-  - Create location-specific emergency contact database
-  - Implement contact provision for police, ambulance, and tourist helpline
-  - Build nearby hospital and guide contact integration
-  - _Requirements: 5.4_
-
-- [x]* 6.6 Write property test for emergency contact provision
-  - **Property 19: Emergency contact provision**
-  - **Validates: Requirements 5.4**
-
-- [x] 6.7 Implement enhanced safety for solo female travelers
-  - Create solo female detection logic with time-based triggers
-  - Build women-specific safety tip generation
-  - Implement enhanced guidance system for vulnerable situations
-  - _Requirements: 5.5_
-
-- [x]* 6.8 Write property test for solo female safety enhancement
-  - **Property 20: Solo female safety enhancement**
-  - **Validates: Requirements 5.5**
-
-- [x] 7. Implement Experience Curator (Agent 5) - Main Orchestrator
-  - Create curateExperience function coordinating all 5 agents
-  - Implement budget constraint satisfaction ensuring costs don't exceed limits
-  - Build scheduling system avoiding peak crowds with 15-minute travel buffers
-  - Create safety-first decision making modifying itineraries based on alerts
-  - Generate hour-by-hour schedules with complete activity information
-  - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
-
-- [x] 7.1 Build agent orchestration system
-  - Create coordination logic calling all 5 agents in proper sequence
-  - Implement data integration system combining agent outputs
-  - Build constraint satisfaction algorithm balancing all requirements
-  - _Requirements: 6.1_
-
-- [x]* 7.2 Write property test for agent orchestration completeness
-  - **Property 21: Agent orchestration completeness**
-  - **Validates: Requirements 6.1**
-
 - [x] 7.3 Implement budget constraint system
-  - Create budget tracking and validation throughout itinerary generation
-  - Build cost optimization system staying within specified limits
-  - Implement budget allocation across activities and guide time
-  - _Requirements: 6.2_
+  - Create budget tracking and validation using pricing knowledge base
+  - Build cost optimization staying within specified limits
+  - Implement budget allocation across activities and services
+  - _Requirements: 5.2_
 
 - [x]* 7.4 Write property test for budget constraint satisfaction
-  - **Property 22: Budget constraint satisfaction**
+  - **Property 10: Budget constraint satisfaction**
+  - **Validates: Requirements 5.2**
+
+- [x] 7.5 Build comprehensive itinerary generation
+  - Create hour-by-hour schedule generation using all knowledge base domains
+  - Implement activity information completeness validation
+  - Build explanation system with cultural context and local knowledge injection
+  - _Requirements: 5.3, 5.4, 5.5_
+
+- [x] 8. Implement Conversational AI System
+  - Create natural language interface with intent detection using intelligence utility
+  - Implement personality detection and response adaptation system
+  - Build conversation history analysis and learning system
+  - Create structured response generation with metadata for frontend
+  - Add cultural context injection and local knowledge integration
+  - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
+
+- [x] 8.1 Build intent detection system
+  - Implement intent classification for FOOD, SAFETY, BEACH, ACTIVITIES, GENERAL, etc.
+  - Create specialized knowledge response system using knowledge base domains
+  - Build context-aware response generation with cultural context
+  - _Requirements: 6.1, 6.5_
+
+- [x]* 8.2 Write property test for intent detection accuracy
+  - **Property 11: Intent detection accuracy**
+  - **Validates: Requirements 6.1**
+
+- [x] 8.3 Implement personality detection and adaptation
+  - Create conversation history analysis for personality types (ADVENTUROUS, SAFETY_CONSCIOUS, BUDGET_AWARE, etc.)
+  - Build response style adaptation system using personality guidance
+  - Implement tone and detail level adjustment based on personality
+  - _Requirements: 6.2_
+
+- [x]* 8.4 Write property test for personality adaptation
+  - **Property 12: Personality adaptation**
   - **Validates: Requirements 6.2**
 
-- [x] 7.5 Build scheduling constraint system
-  - Implement crowd avoidance logic using crowd predictions
-  - Create travel time buffer system with 15-minute minimums
-  - Build activity timing optimization avoiding peak periods
-  - _Requirements: 6.3_
+- [x] 8.5 Build conversation management system
+  - Create structured JSON response generation with metadata
+  - Implement cultural context integration and local knowledge injection
+  - Build demo response system with local Goan personality for fallback
+  - _Requirements: 6.3, 6.4, 6.5_
 
-- [x]* 7.6 Write property test for scheduling constraint compliance
-  - **Property 23: Scheduling constraint compliance**
-  - **Validates: Requirements 6.3**
-
-- [x] 7.7 Create comprehensive itinerary generation
-  - Build hour-by-hour schedule generation with complete activity details
-  - Implement activity information completeness validation
-  - Create explanation system for each recommendation
-  - _Requirements: 6.5_
-
-- [x]* 7.8 Write property test for itinerary information completeness
-  - **Property 24: Itinerary information completeness**
-  - **Validates: Requirements 6.5**
-
-- [x] 8. Implement main orchestrator and API endpoints
-  - Create orchestrateGoanFlow function as main entry point
-  - Build Express.js API server with individual agent endpoints
-  - Implement health check endpoint with system status reporting
-  - Create comprehensive error handling with appropriate HTTP status codes
-  - Add CORS support and JSON formatting for frontend integration
-  - _Requirements: 8.2, 8.3, 8.4, 8.5, 10.1, 10.2, 10.3, 10.4, 10.5_
-
-- [x] 8.1 Build main orchestration function
-  - Create orchestrateGoanFlow as central coordination point
-  - Implement user input processing through all 6 agents
-  - Build complete response generation with all required components
-  - _Requirements: 8.2, 8.3_
-
-- [x]* 8.2 Write property test for agent processing coordination
-  - **Property 26: Agent processing coordination**
-  - **Validates: Requirements 8.2**
-
-- [x]* 8.3 Write property test for response completeness
-  - **Property 27: Response completeness**
-  - **Validates: Requirements 8.3**
-
-- [x] 8.4 Create Express.js API server
-  - Implement individual endpoints for each of the 6 agents
-  - Build main orchestration endpoint with request validation
-  - Create health check endpoint with status, timestamp, and version
-  - _Requirements: 10.1, 10.2_
-
-- [x]* 8.5 Write property test for endpoint availability
-  - **Property 31: Endpoint availability**
-  - **Validates: Requirements 10.1**
-
-- [x]* 8.6 Write property test for health check completeness
-  - **Property 32: Health check completeness**
-  - **Validates: Requirements 10.2**
-
-- [x] 8.7 Implement comprehensive error handling
-  - Create error response formatting with descriptive messages
-  - Build HTTP status code system for different error types
-  - Implement CORS headers and JSON formatting validation
-  - _Requirements: 10.4, 10.5_
-
-- [x]* 8.8 Write property test for error response formatting
-  - **Property 33: Error response formatting**
-  - **Validates: Requirements 10.4**
-
-- [x]* 8.9 Write property test for response formatting compliance
-  - **Property 34: Response formatting compliance**
-  - **Validates: Requirements 10.5**
-
-- [x] 9. Implement knowledge base integration
-  - Create product.md knowledge base access system
-  - Implement venue information querying for 500+ venues
-  - Build guide network data access for 200+ guides
-  - Create pricing algorithm data integration
-  - Implement safety intelligence data utilization
-  - Add cultural context information provision
+- [x] 9. Implement Voice Interface System
+  - Create speech-to-text conversion with real-time feedback using Web Speech API
+  - Implement text-to-speech response generation for AI responses
+  - Build voice recording controls with visual indicators and volume visualization
+  - Create transcript display with interim and final results
+  - Add error handling and fallback to text-based interaction
   - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
 
-- [x] 9.1 Build knowledge base access system
-  - Create product.md file reading and parsing utilities
-  - Implement data extraction for all 7 domains (venues, guides, crowds, pricing, safety, culture, routing)
-  - Build query system for agent-specific data needs
-  - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
+- [x] 9.1 Build speech-to-text system
+  - Implement real-time voice recording with transcript generation
+  - Create visual feedback for recording status and volume levels
+  - Build transcript display with interim and final results
+  - _Requirements: 7.1, 7.2_
 
-- [x]* 9.2 Write property test for knowledge base data access
-  - **Property 25: Knowledge base data access**
-  - **Validates: Requirements 7.1, 7.2, 7.3, 7.4, 7.5**
+- [x] 9.2 Implement text-to-speech system
+  - Create voice response generation from AI text responses
+  - Build appropriate tone and pacing for different content types
+  - Implement voice playback controls and status indicators
+  - _Requirements: 7.3_
 
-- [x] 10. Build React frontend application
-  - Create user interface with input forms for date, budget, and interest sliders
-  - Implement itinerary display with persona, guide details, safety alerts, and activity schedule
-  - Build activity information display showing time, location, cost, crowd status, safety rating, and explanations
-  - Create new itinerary generation options for parameter modification
-  - _Requirements: 8.1, 8.3, 8.4, 8.5_
+- [x] 9.3 Build voice interface controls
+  - Create intuitive start/stop/cancel voice operation controls
+  - Implement error handling with graceful fallback to text
+  - Build voice visualizer with recording and playback states
+  - _Requirements: 7.4, 7.5_
 
-- [x] 10.1 Create user input interface
-  - Build interactive forms with date picker, budget slider, and interest level controls
-  - Implement real-time validation and user feedback
-  - Create responsive design for various screen sizes
-  - _Requirements: 8.1_
+- [x] 10. Implement Specialized Agent Network
+  - Create Food Agent using food_restaurants.md knowledge base
+  - Implement Transport Agent using transport.md knowledge base
+  - Build Markets Agent using markets.md knowledge base
+  - Create Activities Agent using activities.md knowledge base
+  - Integrate all agents with main orchestration system and knowledge base
+  - _Requirements: 8.1, 9.1, 10.1, 11.1_
 
-- [x] 10.2 Build itinerary display system
-  - Create comprehensive display for tourist persona with confidence and interests
-  - Implement matched guide information with score and match reasons
-  - Build safety alert display with severity-based styling
-  - Create detailed activity schedule with all required information
-  - _Requirements: 8.3, 8.4_
+- [x] 10.1 Build Food Agent
+  - Implement restaurant recommendation system using food_restaurants.md knowledge base
+  - Create budget-based filtering (budget/mid-range/premium) with price analysis
+  - Build cuisine type matching and location-based recommendations
+  - Add local tips, cultural significance, and insider recommendations from knowledge base
+  - _Requirements: 8.1, 8.2, 8.3, 8.4, 8.5_
 
-- [x]* 10.3 Write property test for activity information completeness
-  - **Property 28: Activity information completeness**
-  - **Validates: Requirements 8.4**
+- [x]* 10.2 Write property test for food recommendation analysis
+  - **Property 13: Food recommendation analysis**
+  - **Validates: Requirements 8.1**
 
-- [x] 10.4 Implement itinerary modification system
-  - Create new itinerary generation with different parameters
-  - Build parameter modification interface
-  - Implement state management for multiple itinerary requests
-  - _Requirements: 8.5_
-
-- [x] 11. Implement comprehensive error handling and fallbacks
-  - Create fallback mechanisms for each agent when AI services fail
-  - Implement system continuity ensuring user experience during failures
-  - Build error logging system with appropriate context
-  - Create graceful degradation with service level indicators
+- [x] 10.3 Build Transport Agent
+  - Implement multi-modal transport planning using transport.md knowledge base
+  - Create route optimization with GoaMiles, auto-rickshaw, scooter rental, private taxi options
+  - Build fare estimation system using knowledge base pricing data
+  - Add safety considerations, booking information, and scam warnings from knowledge base
   - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5_
 
-- [x] 11.1 Build agent-specific fallback systems
-  - Create Tourist Profiler fallback using heuristic analysis
-  - Implement Guide Matcher fallback with hardcoded top guides
-  - Build Crowd Manager fallback using time-based estimation
-  - Create Price Intelligence fallback with predefined cost structures
-  - Implement Safety Guardian fallback with location/time matrices
-  - _Requirements: 9.2, 9.3, 9.4_
+- [x]* 10.4 Write property test for transport planning comprehensiveness
+  - **Property 14: Transport planning comprehensiveness**
+  - **Validates: Requirements 9.1**
 
-- [x]* 11.2 Write property test for system continuity under failure
-  - **Property 30: System continuity under failure**
-  - **Validates: Requirements 9.5**
+- [x] 10.5 Build Markets Agent
+  - Implement shopping recommendation system using markets.md knowledge base
+  - Create market type analysis (flea, night, local) with timing and specialties
+  - Build bargaining tips and authenticity indicator system from knowledge base
+  - Add what to buy categories and crowd level information
+  - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
 
-- [x] 12. Final integration and testing
-  - Ensure all tests pass, ask the user if questions arise.
+- [x]* 10.6 Write property test for markets recommendation factors
+  - **Property 15: Markets recommendation factors**
+  - **Validates: Requirements 10.1**
 
-- [x] 12.1 Run comprehensive test suite
-  - Execute all unit tests with 90%+ coverage verification
-  - Run all property-based tests with 100+ iterations each
-  - Validate integration between all agents and orchestrator
-  - Test error handling and fallback mechanisms
+- [x] 10.7 Build Activities Agent
+  - Implement activity recommendation system using activities.md knowledge base
+  - Create diverse activity type coverage (waterfalls, nightlife, wellness, heritage, adventure)
+  - Build difficulty level matching and fitness requirement analysis
+  - Add booking information, equipment requirements, and safety guidelines from knowledge base
+  - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.5_
 
-- [x] 12.2 Validate end-to-end functionality
-  - Test complete user journeys from input to itinerary generation
-  - Verify all agent coordination and data flow
-  - Validate frontend-backend integration
-  - Test performance benchmarks (<2s response time)
+- [x]* 10.8 Write property test for activities matching comprehensiveness
+  - **Property 16: Activities matching comprehensiveness**
+  - **Validates: Requirements 11.1**
 
-- [x] 12.3 Verify property-based test compliance
-  - Confirm all 34 correctness properties are implemented and passing
-  - Validate property test tagging with correct format
-  - Ensure minimum 100 iterations per property test
-  - Verify all requirements are covered by corresponding properties
+- [x] 11. Build React Frontend Application
+  - Create modern chat interface with message bubbles, topic chips, and voice integration
+  - Implement saved messages functionality with local storage persistence
+  - Build interactive map exploration with Goa location markers using React Leaflet
+  - Create voice interface integration with recording visualization and volume indicators
+  - Add theme switching (light/dark) and responsive design for various screen sizes
+  - _Requirements: 12.1, 12.2, 12.3, 12.4, 12.5_
+
+- [x] 11.1 Create chat interface system
+  - Build MessageBubble components with proper formatting, timestamps, and action buttons
+  - Implement TopicChips for quick conversation starters (beaches, food, activities, safety)
+  - Create loading indicators and real-time message updates with conversation flow
+  - _Requirements: 12.1, 12.2_
+
+- [x] 11.2 Build saved messages functionality
+  - Implement message saving with heart/bookmark actions for assistant responses
+  - Create dedicated saved messages view with organization and removal capabilities
+  - Build local storage persistence and retrieval system with JSON serialization
+  - _Requirements: 12.3_
+
+- [x] 11.3 Implement interactive map exploration
+  - Create MapExplore component with Leaflet integration for Goa locations
+  - Build location marker system with details and recommendations integration
+  - Implement map navigation, zoom functionality, and responsive design
+  - _Requirements: 12.5_
+
+- [x] 11.4 Build voice interface integration
+  - Create VoiceVisualizer component with recording visualization and volume indicators
+  - Implement voice button controls with recording status and duration display
+  - Build voice response playback with visual feedback and transcript display
+  - Add useVoiceRecorder hook for speech recognition and audio processing
+  - _Requirements: 12.2, 12.4_
+
+- [x] 11.5 Implement theme and responsive design
+  - Create light/dark theme switching with localStorage persistence
+  - Build responsive design for mobile, tablet, and desktop screen sizes
+  - Implement PersonalityPanel sidebar with user stats and persona information
+  - _Requirements: 12.1, 12.5_
+
+- [x] 12. Implement Express API Server
+  - Create comprehensive REST API with individual agent endpoints and health monitoring
+  - Implement main orchestration endpoint with request validation and error handling
+  - Build conversational chat endpoint with intent detection and personality adaptation
+  - Create specialized agent endpoints for food, transport, markets, activities, accommodation
+  - Add CORS support, JSON formatting, and comprehensive error handling for frontend integration
+  - _Requirements: 13.1, 13.2, 13.3, 13.4, 13.5_
+
+- [x] 12.1 Build individual agent endpoints
+  - Create dedicated endpoints for each specialized agent with knowledge base integration
+  - Implement request validation and response formatting for all agent types
+  - Build proper error handling and fallback mechanisms for each endpoint
+  - _Requirements: 13.1_
+
+- [x]* 12.2 Write property test for endpoint availability
+  - **Property 17: Endpoint availability**
+  - **Validates: Requirements 13.1**
+
+- [x] 12.3 Implement main orchestration endpoint
+  - Create comprehensive orchestration API with full agent coordination using knowledge base
+  - Build request validation for user input completeness with adaptive dispatcher
+  - Implement response formatting with all required components and cultural context
+  - _Requirements: 13.3_
+
+- [x] 12.4 Build conversational chat endpoint
+  - Create chat API with intent detection, personality adaptation, and cultural context
+  - Implement conversation history analysis and response generation using AI client
+  - Build structured JSON responses with metadata for frontend processing
+  - Add database integration for conversation storage and personality tracking
+  - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
+
+- [x] 12.5 Build health check system
+  - Create health endpoint with system status, timestamp, service version, and component health
+  - Implement service availability indicators and monitoring capabilities
+  - Build comprehensive system status reporting
+  - _Requirements: 13.2_
+
+- [x]* 12.6 Write property test for health check completeness
+  - **Property 18: Health check completeness**
+  - **Validates: Requirements 13.2**
+
+- [x] 12.7 Implement comprehensive error handling
+  - Create error response formatting with descriptive messages and guidance
+  - Build HTTP status code system for different error types (400, 404, 500)
+  - Implement CORS headers, JSON formatting validation, and request size limits
+  - _Requirements: 13.4, 13.5_
+
+- [x] 13. Implement Error Handling and Fallback Systems
+  - Create multi-tier fallback mechanisms for AI service failures (Groq → Bedrock → Demo)
+  - Implement system continuity ensuring user experience during failures with knowledge base fallbacks
+  - Build error logging system with appropriate context and monitoring capabilities
+  - Create graceful degradation with service level indicators and automatic recovery
+  - Add demo mode with local Goan personality for complete offline functionality
+  - _Requirements: 14.1, 14.2, 14.3, 14.4, 14.5_
+
+- [x] 13.1 Build multi-provider AI system
+  - Create Groq API integration as primary provider with error handling
+  - Implement AWS Bedrock fallback with proper authentication and error handling
+  - Build demo mode with local Goan personality and knowledge base responses
+  - Add automatic provider switching and retry logic with exponential backoff
+  - _Requirements: 14.1, 14.2_
+
+- [x]* 13.2 Write property test for fallback mechanism activation
+  - **Property 19: Fallback mechanism activation**
+  - **Validates: Requirements 14.1**
+
+- [x]* 13.3 Write property test for system continuity under failure
+  - **Property 20: System continuity under failure**
+  - **Validates: Requirements 14.2**
+
+- [x] 13.4 Build agent-specific fallback systems
+  - Create knowledge base fallbacks for all agents using domain-specific data
+  - Implement heuristic algorithms for price calculation, crowd estimation, and safety assessment
+  - Build template-based responses for accommodation, food, transport, markets, and activities
+  - Add cultural context injection and local knowledge for demo responses
+  - _Requirements: 14.2, 14.3, 14.4_
+
+- [x] 13.5 Implement error logging and monitoring
+  - Create comprehensive error logging with context information and stack traces
+  - Build error categorization and severity classification system
+  - Implement graceful error handling with user-friendly messages
+  - _Requirements: 14.4, 14.5_
+
+- [x] 14. Final integration and comprehensive testing
+  - Ensure all systems work together seamlessly with knowledge base integration
+  - Validate end-to-end functionality from voice input to recommendations
+  - Test complete user journeys with all agent coordination and fallback mechanisms
+  - Validate performance benchmarks and multi-provider AI system reliability
+  - _All Requirements Validated_
+
+- [x] 14.1 Run comprehensive system integration
+  - Execute all agent coordination with knowledge base data integration
+  - Test multi-provider AI system (Groq → Bedrock → Demo) with all fallback scenarios
+  - Validate voice interface integration with speech recognition and synthesis
+  - Test conversational AI with intent detection, personality adaptation, and cultural context
+
+- [x] 14.2 Validate end-to-end functionality
+  - Test complete user journeys from voice/text input to final recommendations using all knowledge bases
+  - Verify all agent coordination and data flow across the system with cultural context
+  - Validate frontend-backend integration with chat, saved messages, map, and voice features
+  - Test adaptive dispatcher with missing information detection and guidance
+
+- [x] 14.3 Verify knowledge base integration
+  - Confirm all 8 knowledge base domains are properly integrated and accessible
+  - Validate domain-specific agent responses using accommodation, food, transport, markets, activities, safety, pricing, and crowds data
+  - Test knowledge base parsing and data extraction utilities
+  - Verify cultural context injection and local knowledge integration
+
+- [x] 14.4 Validate production readiness
+  - Test voice interface accuracy with speech recognition and synthesis
+  - Verify conversation persistence and saved message functionality with local storage
+  - Validate map integration with Leaflet and location-based recommendations
+  - Test system performance under various load conditions with multi-provider AI fallbacks
+  - Verify error handling graceful degradation and recovery mechanisms across all components

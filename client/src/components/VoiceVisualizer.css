@@ -1,0 +1,267 @@
+/* VoiceVisualizer Styles - Premium Voice Animation */
+
+.voice-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg,
+            rgba(10, 10, 10, 0.98) 0%,
+            rgba(15, 15, 15, 0.98) 100%);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(24px);
+    animation: overlayFadeIn 0.3s ease-out;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.visualizer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 40px;
+    max-width: 420px;
+    width: 100%;
+}
+
+.voice-canvas {
+    border-radius: 50%;
+    animation: canvasGlow 2s ease-in-out infinite;
+}
+
+@keyframes canvasGlow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 25px rgba(184, 198, 107, 0.4));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 50px rgba(184, 198, 107, 0.6));
+    }
+}
+
+.voice-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.recording-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(184, 198, 107, 0.15);
+    border: 1px solid rgba(184, 198, 107, 0.4);
+    padding: 10px 20px;
+    border-radius: 24px;
+    color: #B8C66B;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: var(--font-display);
+}
+
+.rec-dot {
+    width: 10px;
+    height: 10px;
+    background: #B8C66B;
+    border-radius: 50%;
+    animation: recDotPulse 1s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(184, 198, 107, 0.6);
+}
+
+@keyframes recDotPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(0.7);
+    }
+}
+
+.duration {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: 2px;
+}
+
+.speaking-text {
+    color: rgba(184, 198, 107, 0.9);
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: var(--font-display);
+    animation: speakingTextPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes speakingTextPulse {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.transcript-container {
+    min-height: 90px;
+    max-height: 160px;
+    width: 100%;
+    overflow-y: auto;
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    border: 1px solid rgba(184, 198, 107, 0.2);
+}
+
+.final-transcript {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 500;
+}
+
+.interim-transcript {
+    color: rgba(184, 198, 107, 0.7);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 10px 0 0 0;
+    font-style: italic;
+}
+
+.placeholder-text {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 1.1rem;
+    font-style: italic;
+    margin: 0;
+}
+
+.stop-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 40px;
+    background: rgba(184, 198, 107, 0.15);
+    border: 2px solid rgba(184, 198, 107, 0.5);
+    border-radius: 50px;
+    color: #B8C66B;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stop-btn:hover {
+    background: rgba(184, 198, 107, 0.25);
+    border-color: #B8C66B;
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(184, 198, 107, 0.4);
+}
+
+.stop-icon {
+    font-size: 0.9rem;
+}
+
+.hint-text {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.9rem;
+    margin: 0;
+    text-align: center;
+}
+
+/* Voice Button Recording State */
+.voice-btn.recording {
+    background: rgba(184, 198, 107, 0.2) !important;
+    border-color: #B8C66B !important;
+    animation: voiceBtnRecording 1s ease-in-out infinite;
+}
+
+@keyframes voiceBtnRecording {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(184, 198, 107, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 0 12px rgba(184, 198, 107, 0);
+    }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+    .visualizer-container {
+        padding: 28px 20px;
+    }
+
+    .voice-canvas {
+        width: 220px;
+        height: 220px;
+    }
+
+    .duration {
+        font-size: 2rem;
+    }
+
+    .transcript-container {
+        min-height: 70px;
+        max-height: 120px;
+        padding: 16px;
+    }
+
+    .final-transcript {
+        font-size: 1rem;
+    }
+
+    .stop-btn {
+        padding: 14px 32px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Scrollbar styling for transcript */
+.transcript-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.transcript-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 3px;
+}
+
+.transcript-container::-webkit-scrollbar-thumb {
+    background: rgba(184, 198, 107, 0.4);
+    border-radius: 3px;
+}
+
+.transcript-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(184, 198, 107, 0.6);
+}

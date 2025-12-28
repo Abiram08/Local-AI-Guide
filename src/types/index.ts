@@ -158,6 +158,32 @@ export interface DailySummary {
     satisfaction_prediction: number;
 }
 
+// Accommodation Types
+export interface Accommodation {
+    name: string;
+    location: string;
+    gps?: {
+        latitude: number;
+        longitude: number;
+    };
+    category: 'Hostel' | 'Budget' | 'Mid-Range' | 'Luxury';
+    price_range: string;
+    amenities: string[];
+    vibe: string;
+    rating: number;
+    best_for: string[];
+    noise_level?: string;
+    contact?: string;
+    booking_links?: string[];
+}
+
+export interface AccommodationRecommendation {
+    recommendation: Accommodation;
+    why_recommended: string;
+    safety_score: number;
+    fair_price_verified: boolean;
+}
+
 // Orchestrator Types
 export interface UserInput {
     userId: string;
@@ -176,10 +202,12 @@ export interface UserInput {
 }
 
 export interface OrchestratorResponse {
-    persona: TouristPersona;
-    itinerary: Itinerary;
-    safety_alerts: SafetyAlert[];
-    status: 'success' | 'error';
+    persona?: TouristPersona;
+    itinerary?: Itinerary;
+    accommodation?: AccommodationRecommendation[];
+    safety_alerts?: SafetyAlert[];
+    missing_info?: string[];
+    status: 'success' | 'error' | 'needs_info';
     message?: string;
 }
 

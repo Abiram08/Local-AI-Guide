@@ -1,0 +1,187 @@
+/* ========================================
+   TOPIC CHIPS STYLES
+   Clean, tappable category selection
+   ======================================== */
+
+.topic-chips-container {
+    padding: var(--space-4);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    margin-top: var(--space-4);
+}
+
+.chips-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 var(--space-3) 0;
+}
+
+.topic-chips {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+}
+
+.topic-chip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    border: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-xs);
+}
+
+.topic-chip .chip-icon {
+    font-size: 1rem;
+}
+
+.topic-chip .chip-label {
+    font-weight: 500;
+}
+
+/* Color Variants - All with same Blue Hover */
+.topic-chip.teal {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.topic-chip.coral {
+    background: #fef2f2;
+    color: #9A3412;
+}
+
+.topic-chip.gold {
+    background: #fef9c3;
+    color: #854D0E;
+}
+
+.topic-chip.purple {
+    background: #F3E8FF;
+    color: #6B21A8;
+}
+
+/* Universal Blue Hover Effect for All Chips */
+.topic-chip:hover {
+    background: #4361EE;
+    color: white;
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+    transform: translateY(-2px);
+}
+
+
+/* Example Questions */
+.example-questions {
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-light);
+}
+
+.examples-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    margin: 0 0 var(--space-2) 0;
+}
+
+.examples-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.examples-list button {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-style: italic;
+    font-family: var(--font-body);
+}
+
+.examples-list button:hover {
+    background: var(--primary-100);
+    border-color: var(--primary-500);
+    color: var(--primary-700);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 480px) {
+    .topic-chips {
+        gap: var(--space-1);
+    }
+
+    .topic-chip {
+        padding: var(--space-2) var(--space-3);
+        font-size: 0.8125rem;
+    }
+}
+
+/* ========================================
+   DARK MODE OVERRIDES
+   ======================================== */
+
+:root:not([data-theme='light']) .topic-chips-container,
+[data-theme='dark'] .topic-chips-container {
+    background: rgba(30, 30, 30, 0.8);
+    border: 1px solid var(--border-light);
+}
+
+:root:not([data-theme='light']) .chips-label,
+[data-theme='dark'] .chips-label {
+    color: var(--text-secondary);
+}
+
+:root:not([data-theme='light']) .topic-chip.teal,
+[data-theme='dark'] .topic-chip.teal {
+    background: rgba(14, 165, 233, 0.2);
+    color: #7dd3fc;
+}
+
+:root:not([data-theme='light']) .topic-chip.coral,
+[data-theme='dark'] .topic-chip.coral {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+:root:not([data-theme='light']) .topic-chip.gold,
+[data-theme='dark'] .topic-chip.gold {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fcd34d;
+}
+
+:root:not([data-theme='light']) .topic-chip.purple,
+[data-theme='dark'] .topic-chip.purple {
+    background: rgba(139, 92, 246, 0.2);
+    color: #c4b5fd;
+}
+
+:root:not([data-theme='light']) .examples-list button,
+[data-theme='dark'] .examples-list button {
+    background: var(--bg-elevated);
+    border-color: var(--border-light);
+    color: var(--text-secondary);
+}
+
+:root:not([data-theme='light']) .examples-list button:hover,
+[data-theme='dark'] .examples-list button:hover {
+    background: rgba(67, 97, 238, 0.2);
+    border-color: #4361EE;
+    color: #a5b4fc;
+}

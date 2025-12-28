@@ -1,151 +1,114 @@
 /**
  * GoanFlow Main Orchestrator
  * 
- * This is the main entry point that coordinates all 6 agents to deliver
- * personalized, fair-priced, and safe travel experiences in Goa.
- * 
- * Flow:
- * 1. Profile tourist (Agent 1)
- * 2. Match guide (Agent 2)
- * 3. Check crowds (Agent 3)
- * 4. Analyze prices (Agent 4)
- * 5. Check safety (Agent 6)
- * 6. Curate experience (Agent 5 - orchestrator)
+ * Simplified "Core 4" Architecture:
+ * 1. The Shield (Price Intelligence + Safety Guardian)
+ * 2. The Scout (Crowd Manager)
+ * 3. The Stays (Accommodation Agent)
+ * 4. The Navigator (Experience Curator)
  */
 
-import { profileTourist } from "./agents/touristProfiler";
-import { matchGuide } from "./agents/guideMatcher";
 import { manageCrowds } from "./agents/crowdManager";
 import { analyzePrices } from "./agents/priceIntelligence";
 import { checkSafety } from "./agents/safetyGuardian";
+import { recommendAccommodation } from "./agents/accommodationAgent";
 import { curateExperience } from "./agents/experienceCurator";
 import {
     UserInput,
     OrchestratorResponse,
     TouristPersona,
-    GuideMatch,
     CrowdPrediction,
     PriceAnalysis,
     SafetyResponse,
     Itinerary,
+    AccommodationRecommendation,
 } from "./types";
 
 /**
- * Main orchestration function
- * Coordinates all 6 agents to create perfect travel experience
+ * Main orchestration function (Adaptive Dispatcher)
  */
 export async function orchestrateGoanFlow(
     userInput: UserInput
 ): Promise<OrchestratorResponse> {
     try {
-        console.log("🚀 GoanFlow Orchestration Started");
-        console.log(`User ID: ${userInput.userId}`);
-        console.log(`Date: ${userInput.date}`);
-        console.log(`Budget: ₹${userInput.budget}`);
+        console.log("🚀 GoanFlow Adaptive Orchestration Started");
+
+        // 1. ADAPTIVE DISPATCHER: Check for missing vital info
+        const missingInfo: string[] = [];
+        if (!userInput.budget || userInput.budget <= 0) missingInfo.push("budget");
+        if (!userInput.date) missingInfo.push("date");
+        if (!userInput.preferences?.group_type) missingInfo.push("group_type (solo/couple/family/friends)");
+
+        if (missingInfo.length > 0) {
+            console.log(`⚠️  Needs More Info: Missing ${missingInfo.join(", ")}`);
+            return {
+                status: "needs_info",
+                missing_info: missingInfo,
+                message: "I need a bit more info to curate your perfect Goan experience. Could you provide your " + missingInfo.join(", ") + "?",
+            };
+        }
+
+        console.log(`User ID: ${userInput.userId} | Budget: ₹${userInput.budget}`);
         console.log("\n" + "=".repeat(60) + "\n");
 
-        // Step 1: Profile Tourist (Agent 1)
-        console.log("📊 Step 1: Profiling tourist...");
-        const persona: TouristPersona = await profileTourist(
-            userInput.appInteractions
-        );
-        console.log(`✓ Tourist profiled: ${persona.persona}`);
-        console.log(`  Interests: ${persona.interests.join(", ")}`);
-        console.log(`  Confidence: ${(persona.confidence * 100).toFixed(0)}%`);
-        console.log(`  Budget per day: ₹${persona.budget_per_day}`);
-        console.log("\n");
+        // 2. CORE 4 FLOW
 
-        // Step 2: Match Guide (Agent 2)
-        console.log("🧑‍🤝‍🧑 Step 2: Matching guide...");
-        const guides: GuideMatch[] = await matchGuide(persona, userInput.date);
-        const matchedGuide = guides[0]; // Top match
-        console.log(`✓ Guide matched: ${matchedGuide.name}`);
-        console.log(`  Score: ${matchedGuide.score}/40`);
-        console.log(`  Match reason: ${matchedGuide.match_reason}`);
-        console.log(`  Rate: ${matchedGuide.rate}`);
-        console.log("\n");
-
-        // Step 3: Check Crowds (Agent 3)
-        console.log("👥 Step 3: Analyzing crowds...");
-        const venuesToCheck = ["basilica", "fort_aguada", "anjuna_beach"];
-        const crowdPredictions: Record<string, CrowdPrediction> = {};
-
-        for (const venue of venuesToCheck) {
-            const prediction = await manageCrowds(
-                venue,
-                userInput.start_time,
-                userInput.date,
-                "sunny" // In production, get real weather
-            );
-            crowdPredictions[venue] = prediction;
-            console.log(
-                `  ${prediction.venue.name}: ${prediction.venue.status} (${prediction.venue.current_crowd} people)`
-            );
-        }
-        console.log("✓ Crowds analyzed");
-        console.log("\n");
-
-        // Step 4: Analyze Prices (Agent 4)
-        console.log("💰 Step 4: Verifying fair prices...");
-        const itemsToCheck = ["Prawn Curry", "Fish Thali", "Masala Chai"];
+        // Step 1: The Shield (Security & Pricing)
+        console.log("🛡️ STEP 1: Activating The Goan Shield...");
+        const itemsToCheck = ["Prawn Curry", "Fish Thali"];
         const priceAnalyses: Record<string, PriceAnalysis> = {};
-
         for (const item of itemsToCheck) {
-            const analysis = await analyzePrices(item, "Curlies Beach Shack", 1);
-            priceAnalyses[item.toLowerCase()] = analysis;
-            console.log(
-                `  ${item}: ₹${analysis.goanflow_price} (fair), market: ${analysis.market_overcharge_detection.typical_charged}`
-            );
+            priceAnalyses[item.toLowerCase()] = await analyzePrices(item, "Local Shack", 1);
         }
-        console.log("✓ Prices verified");
-        console.log("\n");
 
-        // Step 5: Check Safety (Agent 6)
-        console.log("🛡️ Step 5: Checking safety...");
         const safetyAlerts: SafetyResponse = await checkSafety(
-            userInput.location
-                ? `${userInput.location.latitude},${userInput.location.longitude}`
-                : "Anjuna Beach",
+            userInput.location ? `${userInput.location.latitude},${userInput.location.longitude}` : "Anjuna Beach",
             userInput.start_time,
-            "beach activities",
-            {
-                gender: userInput.preferences?.group_type === "solo" ? "female" : undefined,
-                group_type: userInput.preferences?.group_type,
-            }
+            "beach exploration"
         );
-        console.log(`  Risk level: ${safetyAlerts.risk_level}/10`);
-        console.log(`  Active alerts: ${safetyAlerts.alerts.length}`);
-        if (safetyAlerts.alerts.length > 0) {
-            safetyAlerts.alerts.forEach((alert) => {
-                console.log(`    - [${alert.severity}] ${alert.message}`);
-            });
-        }
-        console.log("✓ Safety checked");
+        console.log(`✓ Shield Active: Risk Level ${safetyAlerts.risk_level}/10`);
         console.log("\n");
 
-        // Step 6: Curate Experience (Agent 5 - Orchestrator)
-        console.log("🎯 Step 6: Curating perfect experience...");
+        // Step 2: The Scout (Crowd Real-time)
+        console.log("👥 STEP 2: The Scout is scanning crowds...");
+        const venuesToCheck = ["basilica", "ashwem_beach"];
+        const crowdPredictions: Record<string, CrowdPrediction> = {};
+        for (const venue of venuesToCheck) {
+            crowdPredictions[venue] = await manageCrowds(venue, userInput.start_time, userInput.date, "sunny");
+        }
+        console.log("✓ Scout Scanned: Crowds analyzed for key locations");
+        console.log("\n");
+
+        // Step 3: The Stays (Accommodation)
+        console.log("🏨 STEP 3: Finding perfect stays...");
+        // Mapping simple input to internal persona for types compatibility
+        const persona: TouristPersona = {
+            tourist_id: userInput.userId,
+            persona: userInput.preferences?.group_type || "traveler",
+            interests: Object.keys(userInput.appInteractions?.clicks || {}),
+            budget_per_day: userInput.budget / 3, // Assuming 3-day average trip
+            confidence: 1.0,
+            group_size: userInput.preferences?.group_type === "solo" ? 1 : 2,
+            risk_tolerance: 'moderate',
+            dietary_restrictions: [],
+            accessibility_needs: [],
+            generated_at: new Date().toISOString()
+        };
+        const accommodations = await recommendAccommodation(persona);
+        console.log(`✓ Stays Found: ${accommodations[0]?.recommendation.name || "Default Stay"}`);
+        console.log("\n");
+
+        // Step 4: The Navigator (Final Curation)
+        console.log("🎯 STEP 4: The Navigator is building the trip...");
         const itinerary: Itinerary = await curateExperience(
             persona,
-            matchedGuide,
+            { rank: 1, name: "Local Guide", score: 40, match_reason: "Cultural expert", guide_id: "G1", languages: ["English"], specialties: ["Culture"], rate: "₹800/hr", rating: "4.8", availability: [], reviews_highlight: [] },
             crowdPredictions,
             priceAnalyses,
             safetyAlerts,
             userInput.budget,
             userInput.date
         );
-        console.log("✓ Itinerary created");
-        console.log(`  Activities: ${itinerary.activities.length}`);
-        console.log(`  Total spent: ₹${itinerary.daily_summary.total_spent}`);
-        console.log(
-            `  Remaining budget: ₹${itinerary.daily_summary.remaining_budget}`
-        );
-        console.log(
-            `  Satisfaction prediction: ${itinerary.daily_summary.satisfaction_prediction}/10`
-        );
-        console.log("\n" + "=".repeat(60) + "\n");
-
-        // Success response
         console.log("✅ GoanFlow Orchestration Complete!");
         console.log("\n📋 ITINERARY SUMMARY:\n");
         itinerary.activities.forEach((activity) => {
@@ -175,6 +138,7 @@ export async function orchestrateGoanFlow(
         return {
             persona,
             itinerary,
+            accommodation: accommodations,
             safety_alerts: safetyAlerts.alerts,
             status: "success",
             message: "Perfect itinerary created! All agents coordinated successfully.",
@@ -189,48 +153,43 @@ export async function orchestrateGoanFlow(
  * Example usage / Demo
  */
 async function demo() {
-    const userInput: UserInput = {
+    console.log("--- TEST 1: MISSING INFO (Adaptive Flow) ---");
+    const partialInput: UserInput = {
+        userId: "USER_PARTIAL_001",
+        date: "2025-12-28",
+        budget: 0, // Missing budget
+        appInteractions: { clicks: {}, searches: [], time_spent: {}, filters_used: {} },
+        start_time: "09:00"
+    };
+
+    const result1 = await orchestrateGoanFlow(partialInput);
+    console.log(`Status: ${result1.status}`);
+    console.log(`Message: ${result1.message}\n`);
+
+    console.log("--- TEST 2: FULL CONTEXT (Premium Flow) ---");
+    const fullInput: UserInput = {
         userId: "DEMO_USER_001",
         date: "2025-12-28",
-        start_time: "06:30",
-        budget: 4500,
+        start_time: "08:00",
+        budget: 5000,
         appInteractions: {
-            clicks: {
-                beaches: 15,
-                food: 12,
-                water_sports: 8,
-                heritage: 3,
-                nightlife: 5,
-            },
-            searches: ["best seafood", "surfing lessons", "beach shacks", "sunset spots"],
-            time_spent: {
-                food_section: 180,
-                beaches_section: 240,
-                adventure_section: 120,
-                heritage_section: 60,
-            },
-            filters_used: {
-                budget: "moderate",
-                group_size: 2,
-            },
+            clicks: { beaches: 10, food: 5 },
+            searches: [],
+            time_spent: {},
+            filters_used: {},
         },
-        location: {
-            latitude: 15.5597,
-            longitude: 73.8083,
-        },
+        location: { latitude: 15.5597, longitude: 73.8083 },
         preferences: {
             pace: "moderate",
-            group_type: "couple",
+            group_type: "solo",
         },
     };
 
-    try {
-        const result = await orchestrateGoanFlow(userInput);
-        console.log("\n🎉 SUCCESS! GoanFlow delivered personalized experience.");
-        console.log(`Status: ${result.status}`);
-        console.log(`Message: ${result.message}`);
-    } catch (error) {
-        console.error("Demo failed:", error);
+    const result2 = await orchestrateGoanFlow(fullInput);
+    if (result2.status === "success" && result2.itinerary) {
+        console.log(`✓ Generated ${result2.itinerary.activities.length} activities`);
+        console.log(`✓ Selected Stay: ${result2.accommodation?.[0]?.recommendation.name}`);
+        console.log(`✓ Safety Risk: ${result2.itinerary.daily_summary.safety_score}/10`);
     }
 }
 
