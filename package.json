@@ -4,11 +4,14 @@
   "description": "AI-native tourism operating system for Goa using 6-agent orchestration",
   "main": "dist/orchestrator.js",
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build:server && npm run build:client",
+    "build:server": "tsc",
+    "build:client": "cd client && npm install && npm run build",
     "dev": "ts-node src/orchestrator.ts",
     "server": "node --max-http-header-size=16000 -r ts-node/register src/server.ts",
     "client": "cd client && npm start",
     "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start:prod": "node --max-http-header-size=16000 dist/server.js",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:agents": "jest --testPathPattern=agents"
@@ -48,4 +51,3 @@
     "typescript": "^5.3.3"
   }
 }
-

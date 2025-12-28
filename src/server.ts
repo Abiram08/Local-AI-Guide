@@ -6,6 +6,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import { orchestrateGoanFlow } from './orchestrator';
 import { UserInput } from './types';
 import { callAI } from './utils/aiClient';
@@ -282,14 +283,33 @@ app.post('/api/recommend-activities', async (req: Request, res: Response) => {
     }
 });
 
-// 404 handler
-app.use((req: Request, res: Response) => {
-    res.status(404).json({
-        error: 'Endpoint not found',
-        path: req.path,
-        status: 'error',
+// Serve static files from React build in production
+if (process.env.NODE_ENV === 'production') {
+    const clientBuildPath = path.join(__dirname, '../client/build');
+    app.use(express.static(clientBuildPath));
+
+    // SPA fallback - serve index.html for any non-API routes
+    app.get('*', (req: Request, res: Response) => {
+        if (!req.path.startsWith('/api')) {
+            res.sendFile(path.join(clientBuildPath, 'index.html'));
+        } else {
+            res.status(404).json({
+                error: 'Endpoint not found',
+                path: req.path,
+                status: 'error',
+            });
+        }
     });
-});
+} else {
+    // Development 404 handler
+    app.use((req: Request, res: Response) => {
+        res.status(404).json({
+            error: 'Endpoint not found',
+            path: req.path,
+            status: 'error',
+        });
+    });
+}
 
 // Start server
 app.listen(PORT, () => {

@@ -1,249 +1,162 @@
-# GoanFlow: AI-Native Tourism Operating System
+<div align="center">
 
-**An intelligent tourism OS for Goa powered by 6 specialized AI agents**
+# 🏝️ GoanFlow
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)](https://www.typescriptlang.org/)
-[![Claude](https://img.shields.io/badge/Claude-3.5%20Sonnet-purple)](https://www.anthropic.com/)
-[![AWS](https://img.shields.io/badge/AWS-Amplify%20Gen%202-orange)](https://aws.amazon.com/amplify/)
+### AI-Powered Travel Companion for Goa
 
----
+**Experience Goa like a local with intelligent, voice-enabled travel assistance**
 
-## 🎯 The Problem
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18.2-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Groq](https://img.shields.io/badge/Groq-AI-F55036)](https://groq.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**8 million tourists** visit Goa annually, yet there's **ZERO integrated system** for planning experiences:
+[Features](#-features) • [Demo](#-demo) • [Quick Start](#-quick-start) • [Architecture](#-architecture) • [API Reference](#-api-reference) • [Deployment](#-deployment)
 
-- ❌ Tourists **overpay** (₹500 for ₹30 tea)
-- ❌ Guides **underpaid** (₹500-800/day while tourists spend ₹5000+/day)
-- ❌ Sites **overcrowded** (Basilica: 2000 people at peak)
-- ❌ Safety **coordination broken** (no real-time alerts)
-
-**Tourist satisfaction: 6/10**
+</div>
 
 ---
 
-## ✅ The Solution: GoanFlow
+## 🌴 Overview
 
-**6 specialized AI agents** orchestrated to deliver personalized, fair-priced, and safe travel experiences.
+**GoanFlow** is an intelligent travel assistant that helps tourists navigate Goa with personalized recommendations, real-time crowd predictions, and local expertise — all through a beautiful conversational interface with voice support.
 
-### The Secret Weapon: product.md
+### Why GoanFlow?
 
-Unlike generic chatbots, GoanFlow agents are taught **deep Goa knowledge** through a **2000-line context file** covering:
-
-1. **Venue Intelligence** (350 lines) - 500+ venues with crowd patterns, pricing, safety
-2. **Guide Network** (350 lines) - 200+ guides with specialties, languages, ratings
-3. **Crowd Prediction** (350 lines) - 2 years historical data, ML accuracy metrics
-4. **Fair Pricing** (400 lines) - 100+ items with cost breakdowns, exploitation detection
-5. **Safety Intelligence** (300 lines) - Risk levels, emergency contacts, women safety
-6. **Cultural Significance** (300 lines) - Heritage sites, stories, photography tips
-7. **Agent Routing Logic** (300 lines) - Decision rules for agent coordination
+| Problem | GoanFlow Solution |
+|---------|-------------------|
+| Tourists overpay for services | **Price Intelligence** with fair pricing detection |
+| Overcrowded attractions | **Crowd Manager** with real-time predictions |
+| Safety concerns | **Safety Guardian** with emergency contacts |
+| Generic travel advice | **9 Specialized AI Agents** with deep local knowledge |
 
 ---
 
-## 🤖 The 6 Agents
+## ✨ Features
 
-### Agent 1: Tourist Profiler
-**Passive behavioral analysis** - understands preferences without surveys
+### 🎙️ Voice-First Experience
+- **Speech-to-Text** — Ask questions naturally using your voice
+- **Text-to-Speech** — Listen to recommendations on the go
+- **Voice Visualizer** — Real-time audio waveform feedback
 
-- Tracks app interactions (clicks, searches, time spent)
-- Calculates interest scores (adventure, food, culture, nightlife)
-- Generates persona with 95% confidence
-- **Output**: `{ persona: "adventurous_foodie", interests: [...], budget: 4500 }`
+### 🗺️ Interactive Map (72+ Locations)
+- **Real GPS Coordinates** — Accurate location data for all points
+- **Category Filters** — Beaches, Restaurants, Hotels, Markets, Activities
+- **Rich Information** — Prices, ratings, and local tips for each spot
 
-### Agent 2: Guide Matcher
-**ML scoring algorithm** - finds perfect guide
+### 🤖 Multi-Agent AI System
+9 specialized agents work together to provide expert guidance:
 
-**Scoring Formula** (max 40 points):
-- Language match: +10 pts
-- Specialty alignment: +10 pts
-- Rating: +(rating/5)*10 pts
-- Availability: +5 pts
-- Personality fit: +5 pts
+| Agent | Expertise |
+|-------|-----------|
+| 🎯 **Experience Curator** | Orchestrates all agents for personalized responses |
+| 🍽️ **Food Agent** | Restaurant recommendations & local cuisine |
+| 🏨 **Accommodation Agent** | Hotels, hostels, resorts by budget |
+| 🚗 **Transport Agent** | Taxis, rentals, ferries, airport transfers |
+| 🛍️ **Markets Agent** | Flea markets, bargaining tips, best deals |
+| 🏄 **Activities Agent** | Water sports, nightlife, temples, waterfalls |
+| 🛡️ **Safety Guardian** | Travel safety & emergency contacts |
+| 👥 **Crowd Manager** | Real-time occupancy predictions |
+| 💰 **Price Intelligence** | Fair pricing & budget optimization |
 
-**Output**: Top 3 ranked guides with match reasons
+### 🎨 Premium UI/UX
+- **Dark/Light Mode** — System preference detection
+- **Glassmorphism Design** — Modern, elegant interface
+- **Responsive Layout** — Works on all screen sizes
+- **Saved Tips** — Bookmark favorite recommendations
 
-### Agent 3: Crowd Manager
-**Real-time predictions** - avoids overcrowding
+---
 
-- Queries 2 years historical data
-- ML model predictions (30/60/90 min, **85% accuracy**)
-- If predicted crowd > 1000, suggests alternatives
-- **Output**: Current status + alternatives with travel time
+## 🎬 Demo
 
-### Agent 4: Price Intelligence
-**Fair pricing + exploitation detection**
+### Chat Interface
+> Ask anything about Goa — beaches, food, nightlife, transport, or hidden gems!
 
-**Calculation**:
 ```
-ingredient_cost + location_premium + labor + utilities = total_cost
-fair_price = total_cost * 1.30 (30% markup)
+User: "Where can I get the best fish curry under ₹300?"
+
+GoanFlow: Here are my top picks for authentic Goan fish curry:
+
+🏆 **Ritz Classic** (Panjim) - ₹250
+   Classic Goan fish curry rice, been serving since 1980!
+
+🐟 **Vinayak Family Restaurant** (Assagao) - ₹280  
+   Known for pomfret curry, locals' favorite
+
+💡 Pro tip: Ask for "Xit Kodi" — that's the Konkani name!
 ```
-
-**Exploitation Detection**: If typical_price > fair_price * 1.5 → FLAG
-
-**Output**: Cost breakdown, fair price range, exploitation status
-
-### Agent 5: Experience Curator (THE ORCHESTRATOR)
-**Coordinates all agents** - builds perfect day
-
-**Process**:
-1. Call Agent 1 (persona)
-2. Call Agent 2 (guide)
-3. Call Agent 3 (crowds)
-4. Call Agent 4 (prices)
-5. Call Agent 6 (safety)
-6. Apply constraints (budget, interests, travel time, rest breaks)
-7. Generate hour-by-hour itinerary
-
-**Output**: Complete itinerary with activities, costs, safety ratings
-
-### Agent 6: Safety Guardian
-**Real-time alerts + emergency coordination**
-
-**Alert Types**: Weather, Crime, Health, Women Safety, Traffic, Events
-
-**Emergency Response**:
-1. Location pin
-2. Notify matched guide
-3. Alert nearby tourists
-4. Provide emergency contacts
-5. Call tourist's emergency contact
-6. Activate real-time tracking
-
----
-
-## 📊 Expected Impact
-
-| Metric | Before GoanFlow | After GoanFlow | Improvement |
-|--------|----------------|----------------|-------------|
-| Tourist Satisfaction | 6/10 | 9.2/10 | **+53%** |
-| Guide Income | ₹500-800/day | ₹1500-2000/day | **+150%** |
-| Safety Incidents | 15-20/month | 2-3/month | **-85%** |
-| Overtourism | 2000 people (peak) | 1000 people (peak) | **-50%** |
-
-**Revenue Potential**: ₹150 crore (5% commission on ₹3B tourism market)
-
----
-
-## 🛠️ Tech Stack
-
-- **Frontend**: React Native + TypeScript
-- **Backend**: AWS Amplify Gen 2 (type-safe, scalable)
-- **AI**: Claude 3.5 Sonnet (Anthropic)
-- **Orchestration**: Kiro Agentic IDE
-- **Database**: 
-  - RDS PostgreSQL (persistent data)
-  - DynamoDB (real-time data)
-  - ElasticSearch (search)
-- **ML**: SageMaker (crowd prediction models)
-- **Context**: product.md (2000-line knowledge base)
 
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-
-- Node.js 18+
-- TypeScript 5.3+
-- Anthropic API key
+- **Node.js** 18+
+- **npm** or **yarn**
+- **Groq API Key** ([Get it here](https://console.groq.com))
 
 ### Installation
 
 ```bash
-# Clone repository
+# Clone the repository
 git clone https://github.com/YOUR_USERNAME/goanflow.git
 cd goanflow
 
-# Install dependencies
+# Install backend dependencies
 npm install
 
-# Set up environment variables
+# Install frontend dependencies
+cd client && npm install && cd ..
+
+# Configure environment
 cp .env.example .env
-# Add your ANTHROPIC_API_KEY to .env
+# Add your GROQ_API_KEY to .env
 
-# Build TypeScript
-npm run build
-
-# Run demo
-npm run dev
+# Start development server
+npm start
 ```
 
-### Demo Output
+### Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GROQ_API_KEY` | ✅ | Your Groq API key for AI responses |
+| `PORT` | ❌ | Backend port (default: 4000) |
+| `NODE_ENV` | ❌ | `development` or `production` |
+
+---
+
+## 🏗️ Architecture
 
 ```
-🚀 GoanFlow Orchestration Started
-User ID: DEMO_USER_001
-Date: 2025-12-28
-Budget: ₹4500
-
-============================================================
-
-📊 Step 1: Profiling tourist...
-✓ Tourist profiled: adventurous_foodie
-  Interests: water_sports, street_food, nightlife
-  Confidence: 95%
-  Budget per day: ₹4500
-
-🧑‍🤝‍🧑 Step 2: Matching guide...
-✓ Guide matched: Raj Kumar
-  Score: 39.5/40
-  Match reason: Food specialist (98% match) + adventure certified + French speaker + 12 years experience
-  Rate: ₹800/hour
-
-👥 Step 3: Analyzing crowds...
-  Basilica of Bom Jesus: CROWDED (1200 people)
-  Fort Aguada: MODERATE (300 people)
-  Anjuna Beach: LOW (80 people)
-✓ Crowds analyzed
-
-💰 Step 4: Verifying fair prices...
-  Prawn Curry: ₹575 (fair), market: ₹800-1000
-  Fish Thali: ₹184 (fair), market: ₹150-200
-  Masala Chai: ₹23 (fair), market: ₹20-30
-✓ Prices verified
-
-🛡️ Step 5: Checking safety...
-  Risk level: 2/10
-  Active alerts: 1
-    - [INFO] Weather is clear. Good conditions for outdoor activities.
-✓ Safety checked
-
-🎯 Step 6: Curating perfect experience...
-✓ Itinerary created
-  Activities: 7
-  Total spent: ₹7300
-  Remaining budget: ₹-2800
-  Satisfaction prediction: 9.2/10
-
-============================================================
-
-✅ GoanFlow Orchestration Complete!
-
-📋 ITINERARY SUMMARY:
-
-6:30 AM → Sunrise Breakfast
-  Location: Vedavati Beach Shack, Arambol
-  Cost: ₹160 (fair price ✓)
-  Crowd: LOW (10-15 people)
-  Safety: 5/5 ⭐
-  Why: Fresh fish daily, sunrise view, local favorite, fair prices
-
-8:00 AM → Surfing Lesson
-  Location: Arambol Beach
-  Cost: ₹1500 (fair price ✓)
-  Crowd: LOW (8 people in class)
-  Safety: 5/5 ⭐
-  Why: Best waves morning, professional instruction, matches adventure interest
-
-[... more activities ...]
-
-💡 DAILY SUMMARY:
-Total spent: ₹7300
-Remaining budget: ₹-2800
-Guide income: ₹3840 (6 hours)
-Fair prices verified: 100%
-Safety score: 9.5/10
-Satisfaction prediction: 9.2/10
+┌─────────────────────────────────────────────────────────────────┐
+│                    FRONTEND (React + TypeScript)                 │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────────────────────┐│
+│  │   Chat UI   │ │  Map View   │ │    Voice Visualizer         ││
+│  │(Dark/Light) │ │(Leaflet.js) │ │   (Web Speech API)          ││
+│  └─────────────┘ └─────────────┘ └─────────────────────────────┘│
+└───────────────────────────┬─────────────────────────────────────┘
+                            │ REST API (Port 4000)
+┌───────────────────────────▼─────────────────────────────────────┐
+│                 BACKEND (Express + Node.js)                      │
+│                                                                  │
+│  ┌────────────────────────────────────────────────────────────┐ │
+│  │            Experience Curator (Orchestrator)                │ │
+│  │          Routes queries to specialized agents               │ │
+│  └────────────────────────────────────────────────────────────┘ │
+│       │         │         │         │         │         │       │
+│  ┌────┴───┐┌────┴───┐┌────┴───┐┌────┴───┐┌────┴───┐┌────┴───┐  │
+│  │ Food   ││ Stay   ││ Trans  ││Markets ││ Acts   ││ Safety │  │
+│  │ Agent  ││ Agent  ││ Agent  ││ Agent  ││ Agent  ││Guardian│  │
+│  └────────┘└────────┘└────────┘└────────┘└────────┘└────────┘  │
+└───────────────────────────┬─────────────────────────────────────┘
+                            │
+┌───────────────────────────▼─────────────────────────────────────┐
+│               KNOWLEDGE BASE (200+ KB of Data)                   │
+│  accommodation.md │ activities.md │ food_restaurants.md         │
+│  transport.md │ markets.md │ safety.md │ crowds.md │ pricing.md │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -252,36 +165,118 @@ Satisfaction prediction: 9.2/10
 
 ```
 goanflow/
-├── .kiro/
-│   ├── kiro.yaml              # Kiro configuration
-│   └── steering/              # Agent steering files
-│       ├── agent-1.json
-│       ├── agent-2.json
-│       ├── agent-3.json
-│       ├── agent-4.json
-│       ├── agent-5.json
-│       └── agent-6.json
-├── src/
-│   ├── agents/
-│   │   ├── touristProfiler.ts    # Agent 1
-│   │   ├── guideMatcher.ts       # Agent 2
-│   │   ├── crowdManager.ts       # Agent 3
-│   │   ├── priceIntelligence.ts  # Agent 4
-│   │   ├── experienceCurator.ts  # Agent 5 (Orchestrator)
-│   │   └── safetyGuardian.ts     # Agent 6
-│   ├── types/
-│   │   └── index.ts              # TypeScript type definitions
-│   └── orchestrator.ts           # Main entry point
-├── docs/
-│   ├── ARCHITECTURE.md           # System design
-│   ├── KIRO_USAGE.md            # How Kiro built each agent
-│   └── AWS_BLOG_POST.md         # Technical blog (4000+ words)
-├── tests/                        # Unit & integration tests
-├── product.md                    # 2000-line context file (SECRET WEAPON)
+├── client/                     # React frontend
+│   ├── src/
+│   │   ├── components/         # UI components
+│   │   │   ├── MapExplore.tsx      # Interactive Leaflet map
+│   │   │   ├── MessageBubble.tsx   # Chat message component
+│   │   │   ├── TopicChips.tsx      # Quick topic selection
+│   │   │   └── VoiceVisualizer.tsx # Voice recording UI
+│   │   ├── data/
+│   │   │   └── landmarks.ts    # 72 map locations with GPS
+│   │   ├── App.tsx             # Main application
+│   │   └── App.css             # Styling
+│   └── package.json
+│
+├── src/                        # Node.js backend
+│   ├── agents/                 # 9 specialized AI agents
+│   │   ├── experienceCurator.ts
+│   │   ├── foodAgent.ts
+│   │   ├── accommodationAgent.ts
+│   │   ├── transportAgent.ts
+│   │   ├── marketsAgent.ts
+│   │   ├── activitiesAgent.ts
+│   │   ├── safetyGuardian.ts
+│   │   ├── crowdManager.ts
+│   │   └── priceIntelligence.ts
+│   ├── utils/                  # Utilities
+│   │   ├── aiClient.ts         # Groq AI integration
+│   │   └── systemPrompts.ts    # Agent prompts
+│   └── server.ts               # Express API server
+│
+├── knowledge/                  # Knowledge base (200+ KB)
+│   ├── accommodation.md
+│   ├── activities.md
+│   ├── crowds.md
+│   ├── food_restaurants.md
+│   ├── markets.md
+│   ├── pricing.md
+│   ├── safety.md
+│   └── transport.md
+│
+├── railway.json                # Railway deployment config
 ├── package.json
-├── tsconfig.json
 └── README.md
 ```
+
+---
+
+## 🔌 API Reference
+
+### Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/health` | Health check |
+| `POST` | `/api/chat` | Main conversational AI |
+| `POST` | `/api/orchestrate` | Multi-agent itinerary |
+| `POST` | `/api/recommend-food` | Food recommendations |
+| `POST` | `/api/recommend-accommodation` | Stay recommendations |
+| `POST` | `/api/recommend-transport` | Transport options |
+| `POST` | `/api/recommend-markets` | Shopping recommendations |
+| `POST` | `/api/recommend-activities` | Activities & attractions |
+| `POST` | `/api/check-safety` | Safety information |
+| `POST` | `/api/check-crowds` | Crowd predictions |
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:4000/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "Best beaches for sunset?",
+    "userId": "user123",
+    "conversationHistory": []
+  }'
+```
+
+---
+
+## 🚢 Deployment
+
+### Deploy to Railway (Recommended)
+
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Deploy to Railway"
+   git push origin main
+   ```
+
+2. **Connect Railway**
+   - Go to [railway.app](https://railway.app)
+   - New Project → Deploy from GitHub repo
+   - Select your repository
+
+3. **Add Environment Variables**
+   | Variable | Value |
+   |----------|-------|
+   | `GROQ_API_KEY` | Your Groq API key |
+   | `NODE_ENV` | `production` |
+   | `PORT` | `4000` |
+
+4. **Generate Domain** → App is live! 🎉
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | React 18, TypeScript, Leaflet.js, Web Speech API |
+| **Backend** | Node.js, Express, TypeScript |
+| **AI** | Groq (Llama) for natural language processing |
+| **Deployment** | Railway |
 
 ---
 
@@ -300,69 +295,24 @@ npm run test:agents
 
 ---
 
-## 📚 Documentation
-
-- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - System design and architecture
-- **[KIRO_USAGE.md](docs/KIRO_USAGE.md)** - How Kiro built each agent
-- **[AWS_BLOG_POST.md](docs/AWS_BLOG_POST.md)** - Technical deep dive (4000+ words)
-- **[product.md](product.md)** - 2000-line context file (the secret weapon)
-
----
-
-## 🏆 Why This Wins
-
-### Theme Fit: PERFECT
-- **6 specialized agents** (not 1 generic chatbot)
-- **2000-line context file** (deep local knowledge)
-- **Real orchestration** (agents coordinate, not just chain)
-
-### Innovation: Novel Pattern
-- **Context-driven AI** (product.md teaches agents about Goa)
-- **Specialized expertise** (each agent masters one domain)
-- **Constraint satisfaction** (budget, crowds, safety, interests)
-
-### Impact: Real Problem, Real Solution
-- **8M tourists** need this
-- **Measurable metrics** (satisfaction +53%, guide income +150%, safety -85%)
-- **Revenue model** (₹150 crore potential)
-
-### Execution: Professional Quality
-- **Production-ready code** (TypeScript, error handling, fallbacks)
-- **Comprehensive documentation** (README, architecture, blog)
-- **Expected score**: **96/100** (win threshold: 85+)
-
----
-
-## 🤝 Contributing
-
-Contributions welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) first.
-
----
-
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) for details
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **Kiro Agentic IDE** - Agent orchestration platform
-- **Anthropic Claude** - AI reasoning and language understanding
-- **AWS Amplify** - Backend infrastructure
-- **Goa Tourism** - Inspiration and data
+- **Groq** — Ultra-fast AI inference
+- **Leaflet.js** — Beautiful interactive maps
+- **MDN Web Speech API** — Voice recognition
 
 ---
 
-## 📧 Contact
+<div align="center">
 
-For questions or collaboration:
-- **Email**: contact@goanflow.com
-- **GitHub**: [@YOUR_USERNAME](https://github.com/YOUR_USERNAME)
-- **Twitter**: [@goanflow](https://twitter.com/goanflow)
+**Built with ❤️ for travelers exploring Goa**
 
----
+🏝️ **GoanFlow** — Your AI Local Guide
 
-**Built with ❤️ for Goa's 8 million annual tourists**
-
-🏖️ **GoanFlow** - Where AI meets authentic travel experiences
+</div>
